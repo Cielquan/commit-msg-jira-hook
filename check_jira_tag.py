@@ -64,7 +64,7 @@ def main() -> int:
             exit_code = 1
 
     #: Get commit msg
-    if len(sys.argv) > 2:
+    if len(sys.argv) >= 2:
         with open(sys.argv[1]) as file:
             c_msg = file.read()
 
