@@ -49,9 +49,9 @@ Lastly install the hook:
 .. BADGES START
 
 .. info block
-.. |license| image:: https://img.shields.io/github/license/Cielquan/commit_msg_jira_hook.svg?style=flat-square
+.. |license| image:: https://img.shields.io/github/license/Cielquan/commit-msg-jira-hook.svg?style=flat-square
     :alt: License
-    :target: https://github.com/Cielquan/commit_msg_jira_hook/blob/master/LICENSE.rst
+    :target: https://github.com/Cielquan/commit-msg-jira-hook/blob/master/LICENSE.rst
 
 .. |black| image:: https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square
     :alt: Code Style: Black
@@ -59,28 +59,28 @@ Lastly install the hook:
 
 
 .. Github block
-.. |release| image:: https://img.shields.io/github/v/release/Cielquan/commit_msg_jira_hook.svg?style=flat-square&logo=github
+.. |release| image:: https://img.shields.io/github/v/release/Cielquan/commit-msg-jira-hook.svg?style=flat-square&logo=github
     :alt: Github Latest Release
-    :target: https://github.com/Cielquan/commit_msg_jira_hook/releases/latest
+    :target: https://github.com/Cielquan/commit-msg-jira-hook/releases/latest
 
-.. |commits_since| image:: https://img.shields.io/github/commits-since/Cielquan/commit_msg_jira_hook/latest.svg?style=flat-square&logo=github
+.. |commits_since| image:: https://img.shields.io/github/commits-since/Cielquan/commit-msg-jira-hook/latest.svg?style=flat-square&logo=github
     :alt: GitHub commits since latest release
-    :target: https://github.com/Cielquan/commit_msg_jira_hook/commits/master
+    :target: https://github.com/Cielquan/commit-msg-jira-hook/commits/master
 
-.. |last_commit| image:: https://img.shields.io/github/last-commit/Cielquan/commit_msg_jira_hook.svg?style=flat-square&logo=github
+.. |last_commit| image:: https://img.shields.io/github/last-commit/Cielquan/commit-msg-jira-hook.svg?style=flat-square&logo=github
     :alt: GitHub last commit
-    :target: https://github.com/Cielquan/commit_msg_jira_hook/commits/master
+    :target: https://github.com/Cielquan/commit-msg-jira-hook/commits/master
 
-.. |stars| image:: https://img.shields.io/github/stars/Cielquan/commit_msg_jira_hook.svg?style=flat-square&logo=github
+.. |stars| image:: https://img.shields.io/github/stars/Cielquan/commit-msg-jira-hook.svg?style=flat-square&logo=github
     :alt: Github stars
-    :target: https://github.com/Cielquan/commit_msg_jira_hook/stargazers
+    :target: https://github.com/Cielquan/commit-msg-jira-hook/stargazers
 
-.. |forks| image:: https://img.shields.io/github/forks/Cielquan/commit_msg_jira_hook.svg?style=flat-square&logo=github
+.. |forks| image:: https://img.shields.io/github/forks/Cielquan/commit-msg-jira-hook.svg?style=flat-square&logo=github
     :alt: Github forks
-    :target: https://github.com/Cielquan/commit_msg_jira_hook/network/members
+    :target: https://github.com/Cielquan/commit-msg-jira-hook/network/members
 
-.. |contributors| image:: https://img.shields.io/github/contributors/Cielquan/commit_msg_jira_hook.svg?style=flat-square&logo=github
+.. |contributors| image:: https://img.shields.io/github/contributors/Cielquan/commit-msg-jira-hook.svg?style=flat-square&logo=github
     :alt: Github Contributors
-    :target: https://github.com/Cielquan/commit_msg_jira_hook/graphs/contributors
+    :target: https://github.com/Cielquan/commit-msg-jira-hook/graphs/contributors
 
 ..  BADGES END
