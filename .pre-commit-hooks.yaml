@@ -1,0 +1,5 @@
+-   id: jira_commit_msg
+    name: jira_commit_msg
+    description: commit-msg hook for jira issue verification with pre-commit.
+    entry: jira_commit_msg
+    language: python
