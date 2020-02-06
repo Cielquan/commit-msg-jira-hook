@@ -33,6 +33,7 @@ import configparser
 import re
 import sys
 
+from pathlib import Path
 from typing import Dict
 
 from jira import JIRA
@@ -43,25 +44,32 @@ def main() -> int:
     """Check commit messages for issue tags"""
     exit_code = 0
 
-    #: Load 'jira.ini'
-    ini_config = configparser.ConfigParser()
-    ini_config.read("jira.ini")
-
-    #: Check for 'jira' section in 'jira.ini'
-    if "jira" not in ini_config:
-        print("No 'jira' section found in 'jira.ini' or no 'jira.ini' file at all.")
-        exit_code = 1
-
     jira_dict: Dict[str, str] = {}
-    config_list = ["JIRA_URL", "JIRA_TAG", "JIRA_USERNAME", "JIRA_TOKEN"]
 
-    #: Extract configs from 'jira.ini'
-    for config_key in config_list:
-        try:
-            jira_dict.update({config_key: ini_config["jira"][config_key]})
-        except KeyError:
-            print(f"Missing '{config_key}' in 'jira.ini'.")
+    config_file_paths = (Path(Path.home(), ".jira.ini"), Path("jira.ini"))
+    config_file_names = ("global '.jira.ini'", "repo 'jira.ini'")
+    config_file_configs = (["JIRA_USERNAME", "JIRA_TOKEN"], ["JIRA_URL", "JIRA_TAG"])
+
+    for idx, _ in enumerate(config_file_paths):
+        #: Load 'jira.ini'
+        ini_config = configparser.ConfigParser()
+        ini_config.read(config_file_paths[idx])
+
+        #: Check for 'jira' section in '.jira.ini'
+        if "jira" not in ini_config:
+            print(
+                f"No 'jira' section found in {config_file_names[idx]} "
+                f"or no {config_file_names[idx]} file at all."
+            )
             exit_code = 1
+
+        #: Extract configs from 'jira.ini'
+        for config_key in config_file_configs[idx]:
+            try:
+                jira_dict[config_key] = ini_config["jira"][config_key]
+            except KeyError:
+                print(f"Missing '{config_key}' in 'jira.ini'.")
+                exit_code = 1
 
     #: Get commit msg
     if len(sys.argv) >= 2:
