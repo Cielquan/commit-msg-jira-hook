@@ -20,7 +20,7 @@ Add this to your ``.pre-commit-config.yaml``:
 .. code-block:: yaml
 
     - repo: https://github.com/Cielquan/commit-msg-jira-hook
-      rev: v0.1.0 # Use the ref you want to point at
+      rev: v0.2.0 # Use the ref you want to point at
       hooks:
       - id: jira_commit_msg
         stages: [commit-msg]
@@ -32,10 +32,18 @@ Then add a ``jira.ini`` to you projects root directory with following data:
     [jira]
     JIRA_URL = e.g. https://jira.atlassian.com
     JIRA_TAG = tag
+
+Then add a ``.jira.ini`` to your home direcotry with the following data:
+
+.. code-block:: ini
+
+    [jira]
     JIRA_USERNAME = email
     JIRA_TOKEN = api-token
 
 Get api token from here: https://id.atlassian.com/manage/api-tokens
+
+The split into two ``*.ini`` files is so you do not commit your credentials into your repo.
 
 Lastly install the hook:
 
