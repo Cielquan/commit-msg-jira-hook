@@ -42,8 +42,6 @@ from jira import exceptions as jira_exc
 
 def main() -> int:
     """Check commit messages for issue tags"""
-    exit_code = 0
-
     jira_dict: Dict[str, str] = {}
 
     config_file_paths = (Path(Path.home(), ".jira.ini"), Path("jira.ini"))
@@ -61,7 +59,7 @@ def main() -> int:
                 f"No 'jira' section found in {config_file_names[idx]} "
                 f"or no {config_file_names[idx]} file at all."
             )
-            exit_code = 1
+            return 1
 
         #: Extract configs from 'jira.ini'
         for config_key in config_file_configs[idx]:
@@ -69,7 +67,7 @@ def main() -> int:
                 jira_dict[config_key] = ini_config["jira"][config_key]
             except KeyError:
                 print(f"Missing '{config_key}' in {config_file_names[idx]}.")
-                exit_code = 1
+                return 1
 
     #: Get commit msg
     if len(sys.argv) >= 2:
@@ -78,51 +76,50 @@ def main() -> int:
 
         if c_msg == "":
             print("Commit message is empty.")
-            exit_code = 1
+            return 1
 
-        if exit_code == 0:
-            #: Extract tag from commit msg
-            extract = re.search(
-                jira_dict.get("JIRA_TAG", "").upper() + r"-([0-9]+)", c_msg
+        #: Extract tag from commit msg
+        extract = re.search(
+            jira_dict.get("JIRA_TAG", "").upper() + r"-([0-9]+)", c_msg
+        )
+
+        #: Check if tag in commit msg
+        if extract is None:
+            print(
+                f"'{jira_dict.get('JIRA_TAG', '').upper()}' "
+                f"tag not found in commit message."
             )
+            return 1
+        else:
+            #: Get tag from extract
+            issue = str(extract.group(0))
 
-            #: Check if tag in commit msg
-            if extract is None:
-                print(
-                    f"'{jira_dict.get('JIRA_TAG', '').upper()}' "
-                    f"tag not found in commit message."
+            try:
+                jira_inst = JIRA(
+                    {"server": jira_dict.get("JIRA_URL")},
+                    basic_auth=(
+                        jira_dict.get("JIRA_USERNAME"),
+                        jira_dict.get("JIRA_TOKEN"),
+                    ),
                 )
-                exit_code = 1
+            except jira_exc.JIRAError:
+                print(
+                    "Error connecting to jira. "
+                    "Please check JIRA_URL, JIRA_USERNAME and JIRA_TOKEN."
+                )
+                return 1
             else:
-                #: Get tag from extract
-                issue = str(extract.group(0))
-
+                #: Check existence of id
                 try:
-                    jira_inst = JIRA(
-                        {"server": jira_dict.get("JIRA_URL")},
-                        basic_auth=(
-                            jira_dict.get("JIRA_USERNAME"),
-                            jira_dict.get("JIRA_TOKEN"),
-                        ),
-                    )
+                    jira_inst.issue(issue)
                 except jira_exc.JIRAError:
                     print(
-                        "Error connecting to jira. "
-                        "Please check JIRA_URL, JIRA_USERNAME and JIRA_TOKEN."
+                        f"{issue} does not exist or "
+                        f"no permission to view the issue."
                     )
-                    exit_code = 1
-                else:
-                    #: Check existence of id
-                    try:
-                        jira_inst.issue(issue)
-                    except jira_exc.JIRAError:
-                        print(
-                            f"{issue} does not exist or "
-                            f"no permission to view the issue."
-                        )
-                        exit_code = 1
+                    return 1
 
-    return exit_code
+    return 0
 
 
 if __name__ == "__main__":
