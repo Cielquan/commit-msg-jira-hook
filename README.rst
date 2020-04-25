@@ -25,15 +25,10 @@ Add this to your project's ``.pre-commit-config.yaml`` file:
       hooks:
       - id: jira_commit_msg
         stages: [commit-msg]
+        args: ["--jira-url=<URL>", "--jira-tag=<TAG>"]
 
-
-Next add a ``jira.ini`` file to your projects root with the following config:
-
-.. code-block:: ini
-
-    [jira]
-    JIRA_URL = e.g. https://jira.atlassian.com
-    JIRA_TAG = tag
+Both ``args`` are mandatory. Exchange the placeholders with your actual config.
+<URL> may be ``https://jira.atlassian.com``
 
 
 Then add a ``.jira.ini`` file to your home directory with the following config:
