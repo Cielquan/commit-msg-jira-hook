@@ -36,90 +36,92 @@ import sys
 from pathlib import Path
 from typing import Dict
 
+import click
+
 from jira import JIRA
 from jira import exceptions as jira_exc
 
 
-def main() -> int:
-    """Check commit messages for issue tags"""
-    jira_dict: Dict[str, str] = {}
+@click.command()
+@click.option("--jira-url", required=True, type=str, help="URL for jira server.")
+@click.option("--jira-tag", required=True, type=str, help="TAG of jira project.")
+@click.argument(
+    "commit-msg-file",
+    required=True,
+    nargs=1
+)
+@click.pass_context
+def main(ctx, jira_url: str, jira_tag:str, commit_msg_file:str) -> None:
+    """Check commit messages for issue tags
 
-    config_file_paths = (Path(Path.home(), ".jira.ini"), Path("jira.ini"))
-    config_file_names = ("'~/.jira.ini'", "'<repo>/jira.ini'")
-    config_file_config_keys = (("JIRA_USERNAME", "JIRA_TOKEN"), ("JIRA_URL", "JIRA_TAG"))
+    COMMIT_MSG_FILE: Path to file with commit-msg. Passed by pre-commit."
+    """
+    #: Check for '~/.jira.ini' file
+    jira_user_conf_file = Path(Path.home(), ".jira.ini")
+    if not jira_user_conf_file.is_file():
+        click.echo("No '~/.jira.ini' file found.")
+        ctx.abort()
 
-    for idx, _ in enumerate(config_file_paths):
-        #: Load ini file
-        ini_config = configparser.ConfigParser()
-        ini_config.read(config_file_paths[idx])
+    #: Load ini file
+    jira_user_conf = configparser.ConfigParser()
+    jira_user_conf.read(jira_user_conf_file)
 
-        #: Check for 'jira' section in ini file
-        if "jira" not in ini_config:
-            print(
-                f"No 'jira' section found in {config_file_names[idx]} "
-                f"or no {config_file_names[idx]} file at all."
-            )
-            return 1
+    #: Check for 'jira' section in ini file
+    if "jira" not in jira_user_conf:
+        click.echo("No 'jira' section found in '~/.jira.ini' file.")
+        ctx.abort()
 
-        #: Extract configs from ini file
-        for config_key in config_file_config_keys[idx]:
-            try:
-                jira_dict[config_key] = ini_config["jira"][config_key]
-            except KeyError:
-                print(f"Missing '{config_key}' in {config_file_names[idx]}.")
-                return 1
+    #: Extract configs from ini file
+    jira_user_conf_dict: Dict[str, str] = {}
+    for config_key in ("JIRA_USERNAME", "JIRA_TOKEN"):
+        try:
+            jira_user_conf_dict[config_key] = jira_user_conf["jira"][config_key]
+        except KeyError:
+            click.echo(f"Missing '{config_key}' in '~/.jira.ini' file.")
+            ctx.abort()
 
     #: Get commit msg
-    if len(sys.argv) >= 2:
-        with open(sys.argv[1]) as file:
-            c_msg = file.read()
+    with open(commit_msg_file) as cm_file:
+        c_msg = cm_file.read()
+        click.echo(c_msg)
 
-        if c_msg == "":
-            print("Commit message is empty.")
-            return 1
+    #: Abort with empty commit-msg
+    if c_msg == "":
+        click.echo("Commit message is empty.")
+        ctx.abort()
 
-        #: Extract tag from commit msg
-        extract = re.search(
-            jira_dict.get("JIRA_TAG", "").upper() + r"-([0-9]+)", c_msg
+    #: Extract tag from commit msg
+    extract = re.search(jira_tag.upper() + r"-([0-9]+)", c_msg)
+
+    #: Check if tag is in commit msg
+    if extract is None:
+        click.echo(f"'{jira_tag.upper()}' tag not found in commit message.")
+        ctx.abort()
+
+    #: Get tag from extract
+    issue = str(extract.group(0))
+
+    try:
+        jira_inst = JIRA(
+            {"server": jira_url},
+            basic_auth=(
+                jira_user_conf_dict.get("JIRA_USERNAME"),
+                jira_user_conf_dict.get("JIRA_TOKEN"),
+            ),
         )
+    except jira_exc.JIRAError:
+        click.echo(
+            "Error connecting to jira. "
+            "Please check JIRA_URL, JIRA_USERNAME and JIRA_TOKEN."
+        )
+        ctx.abort()
 
-        #: Check if tag in commit msg
-        if extract is None:
-            print(
-                f"'{jira_dict.get('JIRA_TAG', '').upper()}' "
-                f"tag not found in commit message."
-            )
-            return 1
-        else:
-            #: Get tag from extract
-            issue = str(extract.group(0))
-
-            try:
-                jira_inst = JIRA(
-                    {"server": jira_dict.get("JIRA_URL")},
-                    basic_auth=(
-                        jira_dict.get("JIRA_USERNAME"),
-                        jira_dict.get("JIRA_TOKEN"),
-                    ),
-                )
-            except jira_exc.JIRAError:
-                print(
-                    "Error connecting to jira. "
-                    "Please check JIRA_URL, JIRA_USERNAME and JIRA_TOKEN."
-                )
-                return 1
-            else:
-                #: Check existence of id
-                try:
-                    jira_inst.issue(issue)
-                except jira_exc.JIRAError:
-                    print(
-                        f"{issue} does not exist or "
-                        f"no permission to view the issue."
-                    )
-                    return 1
-
-    return 0
+    #: Check existence of id
+    try:
+        jira_inst.issue(issue)
+    except jira_exc.JIRAError:
+        click.echo(f"{issue} does not exist or no permission to view the issue.")
+        ctx.abort()
 
 
 if __name__ == "__main__":
