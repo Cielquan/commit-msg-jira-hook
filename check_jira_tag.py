@@ -49,11 +49,11 @@ def main() -> int:
     config_file_configs = (("JIRA_USERNAME", "JIRA_TOKEN"), ("JIRA_URL", "JIRA_TAG"))
 
     for idx, _ in enumerate(config_file_paths):
-        #: Load 'jira.ini'
+        #: Load ini file
         ini_config = configparser.ConfigParser()
         ini_config.read(config_file_paths[idx])
 
-        #: Check for 'jira' section in '.jira.ini'
+        #: Check for 'jira' section in ini file
         if "jira" not in ini_config:
             print(
                 f"No 'jira' section found in {config_file_names[idx]} "
@@ -61,7 +61,7 @@ def main() -> int:
             )
             return 1
 
-        #: Extract configs from 'jira.ini'
+        #: Extract configs from ini file
         for config_key in config_file_configs[idx]:
             try:
                 jira_dict[config_key] = ini_config["jira"][config_key]
