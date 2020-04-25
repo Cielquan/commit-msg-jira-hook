@@ -46,7 +46,7 @@ def main() -> int:
 
     config_file_paths = (Path(Path.home(), ".jira.ini"), Path("jira.ini"))
     config_file_names = ("'~/.jira.ini'", "'<repo>/jira.ini'")
-    config_file_configs = (("JIRA_USERNAME", "JIRA_TOKEN"), ("JIRA_URL", "JIRA_TAG"))
+    config_file_config_keys = (("JIRA_USERNAME", "JIRA_TOKEN"), ("JIRA_URL", "JIRA_TAG"))
 
     for idx, _ in enumerate(config_file_paths):
         #: Load ini file
@@ -62,7 +62,7 @@ def main() -> int:
             return 1
 
         #: Extract configs from ini file
-        for config_key in config_file_configs[idx]:
+        for config_key in config_file_config_keys[idx]:
             try:
                 jira_dict[config_key] = ini_config["jira"][config_key]
             except KeyError:
