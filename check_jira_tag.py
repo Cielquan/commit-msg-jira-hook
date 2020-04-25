@@ -48,7 +48,7 @@ def main() -> int:
 
     config_file_paths = (Path(Path.home(), ".jira.ini"), Path("jira.ini"))
     config_file_names = ("'~/.jira.ini'", "'<repo>/jira.ini'")
-    config_file_configs = (["JIRA_USERNAME", "JIRA_TOKEN"], ["JIRA_URL", "JIRA_TAG"])
+    config_file_configs = (("JIRA_USERNAME", "JIRA_TOKEN"), ("JIRA_URL", "JIRA_TAG"))
 
     for idx, _ in enumerate(config_file_paths):
         #: Load 'jira.ini'
