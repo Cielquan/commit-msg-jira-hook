@@ -9,13 +9,14 @@ commit-msg-jira-hook
 |
 
 
-commit-msg hook for jira issue verification with pre-commit.
-
-*Works only with python version >= 3.6*
+commit-msg hook for pre-commit to verify jira issues in commit messages.
 
 See also: https://github.com/pre-commit/pre-commit
 
-Add this to your ``.pre-commit-config.yaml``:
+*Works only with python version >= 3.6*
+
+
+Add this to your project's ``.pre-commit-config.yaml`` file:
 
 .. code-block:: yaml
 
@@ -25,7 +26,8 @@ Add this to your ``.pre-commit-config.yaml``:
       - id: jira_commit_msg
         stages: [commit-msg]
 
-Then add a ``jira.ini`` to you projects root directory with following data:
+
+Next add a ``jira.ini`` file to your projects root with the following config:
 
 .. code-block:: ini
 
@@ -33,7 +35,8 @@ Then add a ``jira.ini`` to you projects root directory with following data:
     JIRA_URL = e.g. https://jira.atlassian.com
     JIRA_TAG = tag
 
-Then add a ``.jira.ini`` to your home direcotry with the following data:
+
+Then add a ``.jira.ini`` file to your home directory with the following config:
 
 .. code-block:: ini
 
@@ -43,7 +46,6 @@ Then add a ``.jira.ini`` to your home direcotry with the following data:
 
 Get api token from here: https://id.atlassian.com/manage/api-tokens
 
-The split into two ``*.ini`` files is so you do not commit your credentials into your repo.
 
 Lastly install the hook:
 
