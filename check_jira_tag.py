@@ -45,13 +45,9 @@ from jira import exceptions as jira_exc
 @click.command()
 @click.option("--jira-url", required=True, type=str, help="URL for jira server.")
 @click.option("--jira-tag", required=True, type=str, help="TAG of jira project.")
-@click.argument(
-    "commit-msg-file",
-    required=True,
-    nargs=1
-)
+@click.argument("commit-msg-file", required=True, nargs=1)
 @click.pass_context
-def main(ctx, jira_url: str, jira_tag:str, commit_msg_file:str) -> None:
+def main(ctx, jira_url: str, jira_tag: str, commit_msg_file: str) -> None:
     """Check commit messages for issue tags
 
     COMMIT_MSG_FILE: Path to file with commit-msg. Passed by pre-commit."
