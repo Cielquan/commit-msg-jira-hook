@@ -11,6 +11,16 @@ commit-msg-jira-hook Change Log
 .. _changelog:
 
 
+.. _changelog_0.4.0:
+
+Release 0.4.0
+-------------
+*Released: 25.04.2020*
+
+- Rewrote script as click command (`commit <https://github.com/Cielquan/commit-msg-jira-hook/commit/1ccf15e3de7052d3068aad8067904d52d3386a6e>`__)
+- Updated Readme
+
+
 .. _changelog_030:
 
 Release 0.3.0
