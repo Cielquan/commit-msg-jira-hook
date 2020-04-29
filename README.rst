@@ -20,6 +20,7 @@ Add this to your project's ``.pre-commit-config.yaml`` file:
 
 .. code-block:: yaml
 
+    repos:
     - repo: https://github.com/Cielquan/commit-msg-jira-hook
       rev: v0.4.0 # Use the ref you want to point at
       hooks:
