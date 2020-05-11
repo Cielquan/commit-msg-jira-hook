@@ -43,15 +43,36 @@ from jira import exceptions as jira_exc
 
 
 @click.command()
-@click.option("--jira-url", required=True, type=str, help="URL for jira server.")
-@click.option("--jira-tag", required=True, type=str, help="TAG of jira project.")
+@click.option(
+    "--jira-tag", required=True, type=str, help="TAG of jira project. [Mandatory]"
+)
+@click.option(
+    "--jira-url",
+    type=str,
+    help="URL for jira server. [Mandatory for online verification]",
+)
+@click.option(
+    "--verify/--no-verify",
+    default=True,
+    help="Enable/Disable online verification of jira tag. [default: enabled]",
+)
 @click.argument("commit-msg-file", required=True, nargs=1)
 @click.pass_context
-def main(ctx, jira_url: str, jira_tag: str, commit_msg_file: str) -> None:
+def main(
+    ctx, jira_tag: str, jira_url: str, verify: bool, commit_msg_file: str
+) -> None:
     """Check commit messages for issue tags
 
     COMMIT_MSG_FILE: Path to file with commit-msg. Passed by pre-commit."
     """
+    #: Abort if jira-url is missing
+    if verify and not jira_url:
+        click.echo(
+            "Online verification active. Please provide '--jira-url' or "
+            "deactivate online verification with '--no-verify'."
+        )
+        ctx.abort()
+
     #: Check for '~/.jira.ini' file
     jira_user_conf_file = Path(Path.home(), ".jira.ini")
     if not jira_user_conf_file.is_file():
@@ -97,6 +118,11 @@ def main(ctx, jira_url: str, jira_tag: str, commit_msg_file: str) -> None:
     #: Get tag from extract
     issue = str(extract.group(0))
 
+    #: Exit with 0 when online check is disabled
+    if not verify:
+        ctx.exit()
+
+    #: Log in to jira api
     try:
         jira_inst = JIRA(
             {"server": jira_url},
