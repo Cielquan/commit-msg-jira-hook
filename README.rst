@@ -22,14 +22,16 @@ Add this to your project's ``.pre-commit-config.yaml`` file:
 
     repos:
     - repo: https://github.com/Cielquan/commit-msg-jira-hook
-      rev: v0.4.0 # Use the ref you want to point at
+      rev: v0.5.0 # Use the ref you want to point at
       hooks:
       - id: jira_commit_msg
         stages: [commit-msg]
-        args: ["--jira-url=<URL>", "--jira-tag=<TAG>"]
+        args: ["--jira-tag=<TAG>", "--verify", "--jira-url=<URL>"]
 
-Both ``args`` are mandatory. Exchange the placeholders with your actual config.
-<URL> may be ``https://jira.atlassian.com``
+Exchange the placeholders with your actual config. <URL> may be ``https://jira.atlassian.com``.
+``--jira-tag`` is mandatory.
+``--verify`` can be omitted or changed to ``--no-verify`` to disable online verification.
+``--jira-url`` is mandatory if online verification is enabled or can be omitted otherwise.
 
 
 Then add a ``.jira.ini`` file to your home directory with the following config:
