@@ -11,6 +11,18 @@ commit-msg-jira-hook Change Log
 .. _changelog:
 
 
+.. _changelog_050:
+
+Release 0.5.0
+-------------
+*Released: 11.05.2020*
+
+- Added "--verify" switch (issue #1) (`commit <https://github.com/Cielquan/commit-msg-jira-hook/commit/b33810804b1c409f9d43c624196778c54f9130d2>`__)
+- Improved error message for missing tag or tag-number (issue #2) (`commit <https://github.com/Cielquan/commit-msg-jira-hook/commit/466908305b07deb62b8b2d134f457963bc21c12e>`__)
+- Fixed link in changelog for v0.4.0 (`commit <https://github.com/Cielquan/commit-msg-jira-hook/commit/bac155f73640fdd3f55d9dd035556a125dc843f4>`__)
+- Updated Readme
+
+
 .. _changelog_040:
 
 Release 0.4.0
