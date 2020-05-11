@@ -108,11 +108,16 @@ def main(
         ctx.abort()
 
     #: Extract tag from commit msg
-    extract = re.search(jira_tag.upper() + r"-([0-9]+)", c_msg)
+    extract = re.search(r"(" + jira_tag.upper() + r")-?([0-9]+)?", c_msg)
 
     #: Check if tag is in commit msg
     if extract is None:
         click.echo(f"'{jira_tag.upper()}' tag not found in commit message.")
+        ctx.abort()
+
+    #: Check if tag has a number
+    if extract.group(2) is None:
+        click.echo(f"'{jira_tag.upper()}' tag but no number found in commit message.")
         ctx.abort()
 
     #: Get tag from extract
