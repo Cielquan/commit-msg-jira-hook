@@ -11,7 +11,7 @@ commit-msg-jira-hook Change Log
 .. _changelog:
 
 
-.. _changelog_0.4.0:
+.. _changelog_040:
 
 Release 0.4.0
 -------------
