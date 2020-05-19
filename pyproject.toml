@@ -1,17 +1,30 @@
 [build-system]
-requires = [
-    "setuptools >= 42",
-    "setuptools_scm[toml] >= 3.4, < 4",
-    "wheel >= 0.34",
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
+
+# -- POETRY CONFIG ---------------------------------------------------------------------
+[tool.poetry]
+name = "commit-msg-jira-hook"
+version = "0.6.0"
+description = "commit-msg hook for jira issue verification with pre-commit."
+authors = ["Cielquan <cielquan@protonmail.com>"]
+license = "GPL-3.0-or-later"
+keywords = ["pre-commit", "hook", "git", "commit-msg"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Version Control :: Git",
 ]
-build-backend = 'setuptools.build_meta'
+repository = "https://github.com/Cielquan/commit-msg-jira-hook"
+readme = "READDME.rst"
 
-[tool.setuptools_scm]
-write_to = "version.py"
-write_to_template = "__version__ = {version!r}"
+[tool.poetry.dependencies]
+python = "^3.6"
+jira = "^2.0.0"
+click = "^7.1.2"
 
-# -- BLACK CONFIG ----------------------------------------------------------------------
+[tool.poetry.dev-dependencies]
 
-[tool.black]
-line-length = 88
-exclude = "venv/"
+[tool.poetry.scripts]
+jira_commit_msg = "check_jira_tag:main"
