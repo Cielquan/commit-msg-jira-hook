@@ -18,6 +18,9 @@ classifiers = [
 ]
 repository = "https://github.com/Cielquan/commit-msg-jira-hook"
 readme = "READDME.rst"
+packages = [
+    { include = "check_jira_tag.py" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.6"
