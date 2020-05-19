@@ -18,9 +18,6 @@ classifiers = [
 ]
 repository = "https://github.com/Cielquan/commit-msg-jira-hook"
 readme = "README.rst"
-packages = [
-    { include = "check_jira_tag.py" },
-]
 
 [tool.poetry.dependencies]
 python = "^3.6"
@@ -30,7 +27,7 @@ click = "^7.1.2"
 [tool.poetry.dev-dependencies]
 
 [tool.poetry.scripts]
-jira_commit_msg = "check_jira_tag:main"
+jira_commit_msg = "commit_msg_jira_hook.check_jira_tag:main"
 
 
 # -- BLACK CONFIG ----------------------------------------------------------------------
