@@ -17,7 +17,7 @@ classifiers = [
     "Topic :: Software Development :: Version Control :: Git",
 ]
 repository = "https://github.com/Cielquan/commit-msg-jira-hook"
-readme = "READDME.rst"
+readme = "README.rst"
 packages = [
     { include = "check_jira_tag.py" },
 ]
