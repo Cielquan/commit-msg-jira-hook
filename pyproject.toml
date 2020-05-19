@@ -31,3 +31,64 @@ click = "^7.1.2"
 
 [tool.poetry.scripts]
 jira_commit_msg = "check_jira_tag:main"
+
+
+# -- BLACK CONFIG ----------------------------------------------------------------------
+[tool.black]
+line-length = 88
+exclude = "venv/"
+
+
+# -- ISORT CONFIG ----------------------------------------------------------------------
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+lines_after_imports = 2
+lines_between_types = 1
+known_first_party = ["check_jira_tag", "tests"]
+known_third_party = []
+skip = ["venv"]
+
+
+# -- COVERAGE CONFIG -------------------------------------------------------------------
+[tool.coverage.run]
+branch = true
+parallel = true
+source = ["src/"]
+[tool.coverage.report]
+fail_under = 100
+skip_covered = false
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "def __str__",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+]
+omit = [
+    "venv/*",
+    "tests/*",
+    "setup.py",
+    "*/__main__.py",
+]
+[tool.coverage.paths]
+source = [
+    "src/color_space_visualizer",
+     "*/.tox/*/lib/python*/site-packages/color_space_visualizer",
+     "*/.tox/pypy*/site-packages/color_space_visualizer",
+     "*/.tox\\*\\Lib\\site-packages\\color_space_visualizer",
+     "*/src/color_space_visualizer",
+     "*\\src\\color_space_visualizer",
+]
+
+
+# -- PYLINT CONFIG ---------------------------------------------------------------------
+[tool.pylint."MESSAGES CONTROL"]
+disable = [
+    "C0330", # Indentation | deactivated for black
+]
