@@ -23,8 +23,15 @@ readme = "README.rst"
 python = "^3.6"
 jira = "^2.0.0"
 click = "^7.1.2"
+pytest = {version = "^5.4.2", optional = true}
+pytest-cov = {version = "^2.8.1", optional = true}
+toml = {version = "^0.10.1", optional = true}
 
 [tool.poetry.dev-dependencies]
+devtools = "^0.5.1"
+
+[tool.poetry.extras]
+testing = ["pytest", "pytest-cov", "toml"]
 
 [tool.poetry.scripts]
 jira_commit_msg = "commit_msg_jira_hook.check_jira_tag:main"
