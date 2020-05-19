@@ -11,6 +11,16 @@ commit-msg-jira-hook Change Log
 .. _changelog:
 
 
+.. _changelog_060:
+
+Release 0.6.0
+-------------
+*Released: 19.05.2020*
+
+- Switched from ``setuptools`` to ``poetry`` (`commit <https://github.com/Cielquan/commit-msg-jira-hook/commit/535eb19f6890188f0dccfbd1a89d382fe76e8ca9>`__)
+- Updated Readme
+
+
 .. _changelog_050:
 
 Release 0.5.0
