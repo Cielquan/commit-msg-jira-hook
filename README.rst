@@ -27,8 +27,6 @@ Usage
 
 Add this to your project's ``.pre-commit-config.yaml`` file:
 
-.. highlight:: yaml
-
 .. code-block:: yaml
 
     repos:
@@ -47,8 +45,6 @@ Exchange the placeholders with your actual config. <URL> may be ``https://jira.a
 
 Then add a ``.jira.ini`` file to your home directory with the following config:
 
-.. highlight:: ini
-
 .. code-block:: ini
 
     [jira]
@@ -59,8 +55,6 @@ Get api token from here: https://id.atlassian.com/manage/api-tokens
 
 
 Lastly install the hook:
-
-.. highlight:: console
 
 .. code-block:: console
 
@@ -119,5 +113,3 @@ but I cannot promise a quick response time.
     :target: https://github.com/Cielquan/commit-msg-jira-hook/graphs/contributors
 
 ..  BADGES END
-
-.. highlight:: default
