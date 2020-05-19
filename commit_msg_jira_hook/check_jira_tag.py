@@ -58,9 +58,7 @@ from jira import exceptions as jira_exc
 )
 @click.argument("commit-msg-file", required=True, nargs=1)
 @click.pass_context
-def main(
-    ctx, jira_tag: str, jira_url: str, verify: bool, commit_msg_file: str
-) -> None:
+def main(ctx, jira_tag: str, jira_url: str, verify: bool, commit_msg_file: str) -> None:
     """Check commit messages for issue tags
 
     COMMIT_MSG_FILE: Path to file with commit-msg. Passed by pre-commit."
