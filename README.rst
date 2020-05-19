@@ -13,8 +13,17 @@ commit-msg hook for pre-commit to verify jira issues in commit messages.
 
 See also: https://github.com/pre-commit/pre-commit
 
+Prerequisites
+=============
+
 *Works only with python version >= 3.6*
 
+A new version of ``pip`` that supports PEP-517/PEP-518 is required.
+When the setup fails try updating ``pip``.
+
+
+Usage
+=====
 
 Add this to your project's ``.pre-commit-config.yaml`` file:
 
@@ -56,6 +65,14 @@ Lastly install the hook:
 .. code-block:: console
 
     $ pre-commit install -t commit-msg
+
+
+Disclaimer
+==========
+
+No active maintenance is intended for this project.
+You may leave an issue if you have a questions, bug report or feature request,
+but I cannot promise a quick response time.
 
 
 .. .############################### LINKS ###############################
