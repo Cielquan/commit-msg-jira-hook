@@ -2,7 +2,7 @@
 commit-msg-jira-hook
 ====================
 
-| |license| |black|
+| |maintenance| |license| |black|
 |
 | |release| |commits_since| |last_commit|
 | |stars| |forks| |contributors|
@@ -62,7 +62,11 @@ Lastly install the hook:
 
 .. BADGES START
 
-.. info block
+.. General
+.. |maintenance| image:: https://img.shields.io/badge/No%20Maintenance%20Intended-X-red.svg?style=flat-square
+    :target: http://unmaintained.tech/
+    :alt: Maintenance - not intended
+
 .. |license| image:: https://img.shields.io/github/license/Cielquan/commit-msg-jira-hook.svg?style=flat-square
     :alt: License
     :target: https://github.com/Cielquan/commit-msg-jira-hook/blob/master/LICENSE.rst
@@ -72,7 +76,7 @@ Lastly install the hook:
     :target: https://github.com/psf/black
 
 
-.. Github block
+.. Github
 .. |release| image:: https://img.shields.io/github/v/release/Cielquan/commit-msg-jira-hook.svg?style=flat-square&logo=github
     :alt: Github Latest Release
     :target: https://github.com/Cielquan/commit-msg-jira-hook/releases/latest
