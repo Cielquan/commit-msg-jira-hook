@@ -21,8 +21,8 @@
 # Github: https://github.com/Cielquan/
 # ======================================================================================
 """
-    check_jira_tag
-    ~~~~~~~~~~~~~~
+    commit_msg_jira_hook.check_jira_tag
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     Check commit message for valid issue tag
 
