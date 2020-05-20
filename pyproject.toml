@@ -97,6 +97,4 @@ source = [
 
 # -- PYLINT CONFIG ---------------------------------------------------------------------
 [tool.pylint."MESSAGES CONTROL"]
-disable = [
-    "C0330", # Indentation | deactivated for black
-]
+disable = "C0330" # Indentation | deactivated for black
