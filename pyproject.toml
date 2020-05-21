@@ -38,7 +38,7 @@ testing = ["pytest", "pytest-cov", "toml"]
 pre-commit = ["pre-commit", "mypy", "pylint"]
 
 [tool.poetry.scripts]
-jira_commit_msg = "commit_msg_jira_hook.check_jira_tag:main"
+jira_commit_msg = "commit_msg_jira_hook.commit_msg_jira_hook:main"
 
 
 # -- BLACK CONFIG ----------------------------------------------------------------------
@@ -53,7 +53,7 @@ multi_line_output = 3
 include_trailing_comma = true
 lines_after_imports = 2
 lines_between_types = 1
-known_first_party = ["check_jira_tag", "tests"]
+known_first_party = ["commit_msg_jira_hook", "tests"]
 known_third_party = ["click", "jira", "pytest"]
 skip = ["venv"]
 
@@ -86,12 +86,12 @@ omit = [
 ]
 [tool.coverage.paths]
 source = [
-    "src/color_space_visualizer",
-     "*/.tox/*/lib/python*/site-packages/color_space_visualizer",
-     "*/.tox/pypy*/site-packages/color_space_visualizer",
-     "*/.tox\\*\\Lib\\site-packages\\color_space_visualizer",
-     "*/src/color_space_visualizer",
-     "*\\src\\color_space_visualizer",
+    "src/commit_msg_jira_hook",
+     "*/.tox/*/lib/python*/site-packages/commit_msg_jira_hook",
+     "*/.tox/pypy*/site-packages/commit_msg_jira_hook",
+     "*/.tox\\*\\Lib\\site-packages\\commit_msg_jira_hook",
+     "*/src/commit_msg_jira_hook",
+     "*\\src\\commit_msg_jira_hook",
 ]
 
 
