@@ -5,67 +5,54 @@ commit-msg-jira-hook Change Log
   Version numbers follow the `SemVer <https://semver.org/>`__ principle.
   See the `tags on this repository <https://github.com/Cielquan/commit-msg-jira-hook/tags>`__ for all available versions.
 
+.. towncrier release notes start
+
+
+
+
 .. note::
-  Not all commits are linked. Commits are only linked when they match the specific note.
-
-.. _changelog:
+    Release notes below were written by hand prior usage of ``towncrier``.
 
 
-.. _changelog_060:
+v0.6.0 (19.05.2020)
+-------------------
 
-Release 0.6.0
--------------
-*Released: 19.05.2020*
-
-- Switched from ``setuptools`` to ``poetry`` (`commit <https://github.com/Cielquan/commit-msg-jira-hook/commit/535eb19f6890188f0dccfbd1a89d382fe76e8ca9>`__)
+- Switched from ``setuptools`` to ``poetry``
 - Updated Readme
 
 
-.. _changelog_050:
+v0.5.0 (11.05.2020)
+-------------------
 
-Release 0.5.0
--------------
-*Released: 11.05.2020*
-
-- Added "--verify" switch (issue #1) (`commit <https://github.com/Cielquan/commit-msg-jira-hook/commit/b33810804b1c409f9d43c624196778c54f9130d2>`__)
-- Improved error message for missing tag or tag-number (issue #2) (`commit <https://github.com/Cielquan/commit-msg-jira-hook/commit/466908305b07deb62b8b2d134f457963bc21c12e>`__)
-- Fixed link in changelog for v0.4.0 (`commit <https://github.com/Cielquan/commit-msg-jira-hook/commit/bac155f73640fdd3f55d9dd035556a125dc843f4>`__)
+- Added "--verify" switch
+  `#1 <https://github.com/Cielquan/commit-msg-jira-hook/issues/1>`_
+- Improved error message for missing tag or tag-number
+  `#2 <https://github.com/Cielquan/commit-msg-jira-hook/issues/2>`_
+- Fixed link in changelog for v0.4.0
 - Updated Readme
 
 
-.. _changelog_040:
+v0.4.0 (25.04.2020)
+-------------------
 
-Release 0.4.0
--------------
-*Released: 25.04.2020*
-
-- Rewrote script as click command (`commit <https://github.com/Cielquan/commit-msg-jira-hook/commit/1ccf15e3de7052d3068aad8067904d52d3386a6e>`__)
+- Rewrote script as click command
 - Updated Readme
 
 
-.. _changelog_030:
+v0.3.0 (05.03.2020)
+-------------------
 
-Release 0.3.0
--------------
-*Released: 05.03.2020*
-
-- Improved output for missing keys in ini files (`commit <https://github.com/Cielquan/commit-msg-jira-hook/commit/f7661a88d4f6e3483cbc2667f4c502fad248c49a>`__)
+- Improved output for missing keys in ini files
 - Fixed CHANGELOG.rst
 
 
-.. _changelog_020:
+v0.2.0 (06.02.2020)
+-------------------
 
-Release 0.2.0
--------------
-*Released: 06.02.2020*
-
-- Split content of jira.ini file into two files (`commit <https://github.com/Cielquan/commit-msg-jira-hook/commit/137a2a9aa3e1b41bc9cc4201bbc22a612d8df0be>`__)
+- Split content of jira.ini file into two files
 
 
-.. _changelog__010:
-
-Release 0.1.0
--------------
-*Released: 05.02.2020*
+v0.1.0 (05.02.2020)
+-------------------
 
 - Initial release
