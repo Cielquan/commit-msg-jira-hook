@@ -118,3 +118,6 @@ version.py
 
 # Local backup dir
 .backupfiles
+
+# poetry lockfile
+poetry.lock

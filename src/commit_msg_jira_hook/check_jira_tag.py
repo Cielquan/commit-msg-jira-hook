@@ -21,8 +21,8 @@
 # Github: https://github.com/Cielquan/
 # ======================================================================================
 """
-    check_jira_tag
-    ~~~~~~~~~~~~~~
+    commit_msg_jira_hook.check_jira_tag
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     Check commit message for valid issue tag
 
@@ -38,7 +38,7 @@ from typing import Dict
 
 import click
 
-from jira import JIRA
+from jira import JIRA  # type: ignore
 from jira import exceptions as jira_exc
 
 
@@ -58,9 +58,7 @@ from jira import exceptions as jira_exc
 )
 @click.argument("commit-msg-file", required=True, nargs=1)
 @click.pass_context
-def main(
-    ctx, jira_tag: str, jira_url: str, verify: bool, commit_msg_file: str
-) -> None:
+def main(ctx, jira_tag: str, jira_url: str, verify: bool, commit_msg_file: str) -> None:
     """Check commit messages for issue tags
 
     COMMIT_MSG_FILE: Path to file with commit-msg. Passed by pre-commit."
@@ -83,24 +81,21 @@ def main(
     jira_user_conf = configparser.ConfigParser()
     jira_user_conf.read(jira_user_conf_file)
 
-    #: Check for 'jira' section in ini file
-    if "jira" not in jira_user_conf:
-        click.echo("No 'jira' section found in '~/.jira.ini' file.")
-        ctx.abort()
-
     #: Extract configs from ini file
     jira_user_conf_dict: Dict[str, str] = {}
     for config_key in ("JIRA_USERNAME", "JIRA_TOKEN"):
         try:
-            jira_user_conf_dict[config_key] = jira_user_conf["jira"][config_key]
-        except KeyError:
+            jira_user_conf_dict[config_key] = jira_user_conf.get("jira", config_key)
+        except configparser.NoSectionError:
+            click.echo("No 'jira' section found in '~/.jira.ini' file.")
+            ctx.abort()
+        except configparser.NoOptionError:
             click.echo(f"Missing '{config_key}' in '~/.jira.ini' file.")
             ctx.abort()
 
     #: Get commit msg
     with open(commit_msg_file) as cm_file:
         c_msg = cm_file.read()
-        click.echo(c_msg)
 
     #: Abort with empty commit-msg
     if c_msg == "":
@@ -116,12 +111,12 @@ def main(
         ctx.abort()
 
     #: Check if tag has a number
-    if extract.group(2) is None:
+    if extract.group(2) is None:  # type: ignore
         click.echo(f"'{jira_tag.upper()}' tag but no number found in commit message.")
         ctx.abort()
 
     #: Get tag from extract
-    issue = str(extract.group(0))
+    issue = str(extract.group(0))  # type: ignore
 
     #: Exit with 0 when online check is disabled
     if not verify:
@@ -152,4 +147,4 @@ def main(
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main())  # pylint: disable=E1120

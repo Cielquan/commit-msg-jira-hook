@@ -1,0 +1,165 @@
+minimum_pre_commit_version: "1.15"
+default_stages: [commit, push]
+
+repos:
+  #: code unspecific out-of-the-box hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.5.0
+    hooks:
+      - id: no-commit-to-branch
+        args: [--branch, staging, --branch, master, --pattern, release/.*]
+      - id: check-case-conflict
+      - id: name-tests-test
+        args: ["--django"]
+      - id: check-json
+      - id: pretty-format-json
+        args: ["--indent=4", "--autofix"]
+      - id: check-toml
+      - id: check-yaml
+      - id: detect-private-key
+      - id: trailing-whitespace
+        stages: [commit, push]
+      - id: end-of-file-fixer
+        stages: [commit, push]
+
+  #: several python code regex hooks
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.5.1
+    hooks:
+      - id: python-no-log-warn
+      - id: python-no-eval
+
+  #: pyupgrade - upgrade old python syntax to new
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.4.1
+    hooks:
+      - id: pyupgrade
+        args: [--py36-plus]
+
+  #: seed-isort-config - fill isort's known_third_party config
+  - repo: https://github.com/asottile/seed-isort-config
+    rev: v2.1.1
+    hooks:
+      - id: seed-isort-config
+        args: [--application-directories, "src:."]
+
+  #: isort - sort imports
+  - repo: https://github.com/timothycrosley/isort
+    rev: 4.3.21
+    hooks:
+      - id: isort
+        args: [--apply, --recursive]
+        additional_dependencies: [toml>=0.10.1]
+
+  #: blacken-docs - black for python code in docs
+  - repo: https://github.com/asottile/blacken-docs
+    rev: v1.7.0
+    hooks:
+      - id: blacken-docs
+        additional_dependencies: [black==19.10b0]
+
+  #: black - python formatter
+  - repo: https://github.com/psf/black
+    rev: 19.10b0
+    hooks:
+      - id: black
+        args: [--safe]
+
+# TODO: 16.04.2020: Currently bandit is unusable with pre-commit .. wait for fix .. remove in tox then
+#  #: bandit - python code security analyzer
+#  - repo: https://github.com/PyCQA/bandit
+#    rev: 1.6.2
+#    hooks:
+#      - id: bandit
+#        args: ["--exclude ./.tox/*,./venv/*,./.eggs/*,./tests/*"]
+
+  #: flake8 - python linter
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.8.1
+    hooks:
+      - id: flake8
+        args: [
+          --count,
+          --statistics,
+          "--extend-exclude=*venv*/,*.egg,build/",
+          --extend-ignore=E203,
+          --max-line-length=88,
+          --max-complexity=20,
+          --pytest-fixture-no-parentheses,
+          "--format=${cyan}%(path)s${reset}:${yellow_bold}%(row)d${reset}:${green_bold}%(col)d${reset}: ${red_bold}%(code)s${reset} %(text)s",
+        ]
+        additional_dependencies:
+          #: Colored output - needs custom format
+          - "flake8-colors"
+          #: Check for python builtins being used as variables or parameters.
+          #: A001-A002
+          - "flake8-builtins==1.5.2"
+          #: Finding likely bugs and design problems
+          #: B001-B014 | B301-B306 | B901-B903,B950
+          - "flake8-bugbear==20.1.4"
+          #: Write better list/set/dict comprehensions
+          #: C400-C416
+          - "flake8-comprehensions==3.2.2"
+          #: Check docstrings with PEP257
+          #: D100-D107 | D200-D215 | D300-D302 | D400-D417
+# TODO: 16.04.2020: Wait for https://github.com/PyCQA/pydocstyle/pull/446 to fix problem with noqa before module docstrings
+          # - "flake8-docstrings==1.5.0"
+          #: Find dead/out-commented code
+          #: E800
+          - "flake8-eradicate==0.3.0"
+          #: Validate (lack of) logging format strings
+          #: G001-G004, G010 | G100 | G200-G202
+          - "flake8-logging-format==0.6.0"
+          #: Find line breaks with '\'
+          #: N400
+          - "flake8-broken-line==0.2.0"
+          #: Check your code against PEP 8 naming conventions
+          #: N801-N807, N811-N817
+          - "pep8-naming==0.10.0"
+          #: Find mutable default assignments in func/class definitions
+          #: M511
+          - "flake8-mutable==1.2.0"
+          #: Check common style issues or inconsistencies with pytest-based tests
+          #: PT001-PT019
+          - "flake8-pytest-style==1.1.1"
+          #: Check if typing imports are properly guarded
+          #: TYP001 - TYP006
+          - "flake8-typing-imports==1.9.0"
+          #: Find strings with leading 'u'
+          #: UPS
+          - "flake8-no-u-prefixed-strings==0.2"
+          #: Make more readable variables names
+          #: VNE001-VNE003
+          - "flake8-variables-names==0.0.3"
+          #: Checks for misuse of sys.version or sys.version_info (Py 3.10 / 4.0 coming)
+          #: YTT101-YTT103 | YTT201-YTT204 | YTT301-YTT303
+          - "flake8-2020==1.6.0"
+
+
+  #: Hooks managed via tox `pre-commit` venv
+  - repo: local
+    hooks:
+      #: pylint - python linter
+      - id: pylint
+        name: pylint
+        entry: ./.pre_commit_tool_runner pylint pre-commit,dev
+        language: system
+        types: [python]
+      #: mypy - python type checker
+      - id: mypy
+        args: ["--warn-unused-ignores"] # , --scripts-are-modules, --ignore-missing-imports]
+        name: mypy
+        entry: ./.pre_commit_tool_runner mypy pre-commit,dev
+        language: system
+        types: [python]
+
+
+  #: Meta hooks
+  - repo: meta
+    hooks:
+      - id: identity
+        stages: [manual]
+      - id: check-hooks-apply
+        stages: [manual]
+      - id: check-useless-excludes
+        stages: [manual]
