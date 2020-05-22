@@ -1,101 +1,102 @@
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+    requires = ["poetry>=0.12"]
+    build-backend = "poetry.masonry.api"
 
 
 # -- POETRY CONFIG ---------------------------------------------------------------------
 [tool.poetry]
-name = "commit-msg-jira-hook"
-version = "0.6.0"
-description = "commit-msg hook for jira issue verification with pre-commit."
-authors = ["Cielquan <cielquan@protonmail.com>"]
-license = "GPL-3.0-or-later"
-keywords = ["pre-commit", "hook", "git", "commit-msg"]
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Developers",
-    "Topic :: Software Development :: Version Control :: Git",
-]
-repository = "https://github.com/Cielquan/commit-msg-jira-hook"
-readme = "README.rst"
+    name = "commit-msg-jira-hook"
+    version = "0.6.0"
+    description = "commit-msg hook for jira issue verification with pre-commit."
+    authors = ["Cielquan <cielquan@protonmail.com>"]
+    license = "GPL-3.0-or-later"
+    keywords = ["pre-commit", "hook", "git", "commit-msg"]
+    classifiers = [
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Version Control :: Git",
+    ]
+    repository = "https://github.com/Cielquan/commit-msg-jira-hook"
+    readme = "README.rst"
 
 [tool.poetry.dependencies]
-python = "^3.6.1"
-importlib-metadata = {version = "^1.6", python = "<3.8"}
-jira = "^2.0.0"
-click = "^7.1.2"
-pytest = {version = "^5.4.2", optional = true}
-pytest-cov = {version = "^2.8.1", optional = true}
-toml = {version = "^0.10.1", optional = true}
-pre-commit = {version = "^2.4", optional = true}
-mypy = {version = "0.770", optional = true}
-pylint = {version = "^2.4", optional = true}
+    python = "^3.6.1"
+    importlib-metadata = {version = "^1.6", python = "<3.8"}
+    jira = "^2.0.0"
+    click = "^7.1.2"
+    pytest = {version = "^5.4.2", optional = true}
+    pytest-cov = {version = "^2.8.1", optional = true}
+    toml = {version = "^0.10.1", optional = true}
+    pre-commit = {version = "^2.4", optional = true}
+    mypy = {version = "0.770", optional = true}
+    pylint = {version = "^2.4", optional = true}
 
-[tool.poetry.dev-dependencies]
-devtools = {version = "^0.5", extras = ["pygments"]}
+    [tool.poetry.dev-dependencies]
+        devtools = {version = "^0.5", extras = ["pygments"]}
 
-[tool.poetry.extras]
-testing = ["pytest", "pytest-cov", "toml"]
-pre-commit = ["pre-commit", "mypy", "pylint"]
+    [tool.poetry.extras]
+        testing = ["pytest", "pytest-cov", "toml"]
+        pre-commit = ["pre-commit", "mypy", "pylint"]
 
-[tool.poetry.scripts]
-jira_commit_msg = "commit_msg_jira_hook.commit_msg_jira_hook:main"
+    [tool.poetry.scripts]
+        jira_commit_msg = "commit_msg_jira_hook.commit_msg_jira_hook:main"
 
 
 # -- BLACK CONFIG ----------------------------------------------------------------------
 [tool.black]
-line-length = 88
-exclude = "venv/"
+    line-length = 88
+    exclude = "venv/"
 
 
 # -- ISORT CONFIG ----------------------------------------------------------------------
 [tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-lines_after_imports = 2
-lines_between_types = 1
+    multi_line_output = 3
+    include_trailing_comma = true
+    lines_after_imports = 2
+    lines_between_types = 1
+    skip = ["venv"]
 known_first_party = ["commit_msg_jira_hook", "tests"]
 known_third_party = ["click", "jira", "pytest"]
-skip = ["venv"]
+
 
 
 # -- COVERAGE CONFIG -------------------------------------------------------------------
 [tool.coverage.run]
-branch = true
-parallel = true
-source = ["src/"]
+    branch = true
+    parallel = true
+    source = ["src/"]
 [tool.coverage.report]
-fail_under = 100
-skip_covered = false
-show_missing = true
-exclude_lines = [
-    "pragma: no cover",
-    "def __str__",
-    "def __repr__",
-    "if self.debug:",
-    "if settings.DEBUG",
-    "raise AssertionError",
-    "raise NotImplementedError",
-    "if 0:",
-    "if __name__ == .__main__.:",
-]
-omit = [
-    "venv/*",
-    "tests/*",
-    "setup.py",
-    "*/__main__.py",
-]
+    fail_under = 100
+    skip_covered = false
+    show_missing = true
+    exclude_lines = [
+        "pragma: no cover",
+        "def __str__",
+        "def __repr__",
+        "if self.debug:",
+        "if settings.DEBUG",
+        "raise AssertionError",
+        "raise NotImplementedError",
+        "if 0:",
+        "if __name__ == .__main__.:",
+    ]
+    omit = [
+        "venv/*",
+        "tests/*",
+        "setup.py",
+        "*/__main__.py",
+    ]
 [tool.coverage.paths]
-source = [
-    "src/commit_msg_jira_hook",
-     "*/.tox/*/lib/python*/site-packages/commit_msg_jira_hook",
-     "*/.tox/pypy*/site-packages/commit_msg_jira_hook",
-     "*/.tox\\*\\Lib\\site-packages\\commit_msg_jira_hook",
-     "*/src/commit_msg_jira_hook",
-     "*\\src\\commit_msg_jira_hook",
-]
+    source = [
+        "src/commit_msg_jira_hook",
+         "*/.tox/*/lib/python*/site-packages/commit_msg_jira_hook",
+         "*/.tox/pypy*/site-packages/commit_msg_jira_hook",
+         "*/.tox\\*\\Lib\\site-packages\\commit_msg_jira_hook",
+         "*/src/commit_msg_jira_hook",
+         "*\\src\\commit_msg_jira_hook",
+    ]
 
 
 # -- PYLINT CONFIG ---------------------------------------------------------------------
 [tool.pylint."MESSAGES CONTROL"]
-disable = "C0330" # Indentation | deactivated for black
+    disable = "C0330" # Indentation | deactivated for black
