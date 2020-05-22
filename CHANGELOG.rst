@@ -7,7 +7,25 @@ commit-msg-jira-hook Change Log
 
 .. towncrier release notes start
 
+v0.6.1 (2020-05-22)
+-------------------
 
+Miscellaneous
+~~~~~~~~~~~~~
+
+- Added `pytest` tests with 100% coverage
+  `#3 <https://github.com/cielquan/commit-msg-jira-hook/issues/3>`_
+- Added cielquan's default `pre-commit` config
+  `#4 <https://github.com/cielquan/commit-msg-jira-hook/issues/4>`_
+- Added test automation with `tox`
+  `#5 <https://github.com/cielquan/commit-msg-jira-hook/issues/5>`_
+- Added CI config to run `tox` in a pipeline
+  `#6 <https://github.com/cielquan/commit-msg-jira-hook/issues/6>`_
+- Added `towncrier` for changelog updates
+  `#7 <https://github.com/cielquan/commit-msg-jira-hook/issues/7>`_
+
+
+----
 
 
 .. note::
