@@ -54,7 +54,7 @@
     directory = "docs/.changes"
     template = "docs/.changes/template.jinja2"
     title_format = "v{version} ({project_date})"
-    issue_format = "`#{issue} <https://github.com/cielquan/commit_msg_jira_hook/issues/{issue}>`_"
+    issue_format = "`#{issue} <https://github.com/cielquan/commit-msg-jira-hook/issues/{issue}>`_"
     underlines = ["-", "~"]
     wrap = false  # Wrap text to 79 characters
     all_bullets = true  # make all fragments bullet points
