@@ -96,7 +96,6 @@ def main(ctx, jira_tag: str, jira_url: str, verify: bool, commit_msg_file: str) 
     #: Get commit msg
     with open(commit_msg_file) as cm_file:
         c_msg = cm_file.read()
-        click.echo(c_msg)
 
     #: Abort with empty commit-msg
     if c_msg == "":
