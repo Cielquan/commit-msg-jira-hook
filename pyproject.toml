@@ -21,6 +21,7 @@ readme = "README.rst"
 
 [tool.poetry.dependencies]
 python = "^3.6.1"
+importlib-metadata = {version = "^1.6", python = "<3.8"}
 jira = "^2.0.0"
 click = "^7.1.2"
 pytest = {version = "^5.4.2", optional = true}
