@@ -18,6 +18,9 @@
     ]
     repository = "https://github.com/Cielquan/commit-msg-jira-hook"
     readme = "README.rst"
+    packages = [
+        { include = "commit_msg_jira_hook", from = "src" },
+    ]
 
 [tool.poetry.dependencies]
     python = "^3.6.1"
