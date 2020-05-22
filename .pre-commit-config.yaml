@@ -79,7 +79,7 @@ repos:
 #    rev: 1.6.2
 #    hooks:
 #      - id: bandit
-#        args: ["--exclude ./.tox/*,./.eggs/*,./tests/*"]
+#        args: ["--exclude ./.tox/*,./venv/*,./.eggs/*,./tests/*"]
 
   #: flake8 - python linter
   - repo: https://gitlab.com/pycqa/flake8
@@ -150,21 +150,16 @@ repos:
       #: pylint - python linter
       - id: pylint
         name: pylint
-        entry: ./.pre-commit-scripts/run_pylint
+        entry: ./.pre_commit_tool_runner pylint pre-commit,dev
         language: system
         types: [python]
       #: mypy - python type checker
       - id: mypy
         args: ["--warn-unused-ignores"] # , --scripts-are-modules, --ignore-missing-imports]
         name: mypy
-        entry: ./.pre-commit-scripts/run_mypy
+        entry: ./.pre_commit_tool_runner mypy pre-commit,dev
         language: system
         types: [python]
-        exclude: >
-          (?x)^(
-              setup.py|
-              docs/source/conf.py
-          )$
 
 
   #: Meta hooks
