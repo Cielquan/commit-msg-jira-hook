@@ -36,6 +36,7 @@
 
     [tool.poetry.dev-dependencies]
         devtools = {version = "^0.5", extras = ["pygments"]}
+        towncrier = {version = "19.9.0rc1"}
 
     [tool.poetry.extras]
         testing = ["pytest", "pytest-cov", "toml"]
@@ -43,6 +44,50 @@
 
     [tool.poetry.scripts]
         jira_commit_msg = "commit_msg_jira_hook.commit_msg_jira_hook:main"
+
+
+# -- TOWNCRIER CONFIG ----------------------------------------------------------------------
+[tool.towncrier]
+    package = "commit_msg_jira_hook"
+    package_dir = "src"
+    filename = "CHANGELOG.rst"
+    directory = "docs/.changes"
+    template = "docs/.changes/template.jinja2"
+    title_format = "v{version} ({project_date})"
+    issue_format = "`#{issue} <https://github.com/cielquan/commit_msg_jira_hook/issues/{issue}>`_"
+    underlines = ["-", "~"]
+    wrap = false  # Wrap text to 79 characters
+    all_bullets = true  # make all fragments bullet points
+
+    [[tool.towncrier.type]]
+        directory = "bugfix"
+        name = "Bugfixes"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "feature"
+        name = "New Features"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "breaking"
+        name = "Backwards incompatible changes"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "deprecation"
+        name = "Deprecations (removal in next major release)"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "doc"
+        name = "Documentation"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "misc"
+        name = "Miscellaneous"
+        showcontent = true
 
 
 # -- BLACK CONFIG ----------------------------------------------------------------------
