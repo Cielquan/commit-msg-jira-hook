@@ -32,7 +32,4 @@ try:
 except ModuleNotFoundError:
     from importlib_metadata import version  # type: ignore
 
-try:
-    __version__ = version(__name__)
-except Exception:  # pylint: disable=W0703
-    pass
+__version__ = version(__name__)
