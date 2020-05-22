@@ -65,7 +65,7 @@
         showcontent = true
 
     [[tool.towncrier.type]]
-        directory = "feature"
+        directory = "feat"
         name = "New Features"
         showcontent = true
 
@@ -75,7 +75,7 @@
         showcontent = true
 
     [[tool.towncrier.type]]
-        directory = "deprecation"
+        directory = "depr"
         name = "Deprecations (removal in next major release)"
         showcontent = true
 
