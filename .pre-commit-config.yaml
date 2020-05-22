@@ -4,7 +4,7 @@ default_stages: [commit, push]
 repos:
   #: code unspecific out-of-the-box hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.5.0
+    rev: v3.1.0
     hooks:
       - id: no-commit-to-branch
         args: [--branch, staging, --branch, master, --pattern, release/.*]
@@ -31,7 +31,7 @@ repos:
 
   #: pyupgrade - upgrade old python syntax to new
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.4.1
+    rev: v2.4.3
     hooks:
       - id: pyupgrade
         args: [--py36-plus]
