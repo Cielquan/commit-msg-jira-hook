@@ -39,7 +39,7 @@ Add this to your project's ``.pre-commit-config.yaml`` file:
 
     repos:
     - repo: https://github.com/Cielquan/commit-msg-jira-hook
-      rev: 0.6.0 # Use the ref you want to point at
+      rev: 0.6.2 # Use the ref you want to point at
       hooks:
       - id: jira_commit_msg
         stages: [commit-msg]
