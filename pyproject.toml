@@ -43,7 +43,7 @@
         pre-commit = ["pre-commit", "mypy", "pylint"]
 
     [tool.poetry.scripts]
-        jira_commit_msg = "commit_msg_jira_hook.commit_msg_jira_hook:main"
+        jira_commit_msg = "commit_msg_jira_hook.check_jira_tag:main"
 
 
 # -- TOWNCRIER CONFIG ----------------------------------------------------------------------
