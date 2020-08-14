@@ -2,9 +2,11 @@
     name: jira_commit_msg
     description: commit-msg hook for jira issue verification with pre-commit.
     entry: jira_commit_msg
+    stages: [commit-msg]
     language: python
 -   id: jira_prepare_commit_msg
     name: jira_prepare_commit_msg
     description: prepare-commit-msg hook for adding jira issue with pre-commit.
     entry: jira_prepare_commit_msg
+    stages: [prepare-commit-msg]
     language: python
