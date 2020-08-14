@@ -33,16 +33,18 @@ When the setup fails try updating ``pip``.
 Usage
 =====
 
+jira_commit_msg hook
+--------------------
+
 Add this to your project's ``.pre-commit-config.yaml`` file:
 
 .. code-block:: yaml
 
     repos:
     - repo: https://github.com/Cielquan/commit-msg-jira-hook
-      rev: 0.6.2 # Use the ref you want to point at
+      rev: 0.7.0 # Use the ref you want to point at
       hooks:
       - id: jira_commit_msg
-        stages: [commit-msg]
         args: ["--jira-tag=<TAG>", "--verify", "--jira-url=<URL>"]
 
 Exchange the placeholders with your actual config. <URL> may be ``https://jira.atlassian.com``.
@@ -68,6 +70,34 @@ Lastly install the hook:
 
     $ pre-commit install -t commit-msg
 
+jira_prepare_commit_msg hook
+----------------------------
+
+Add this to your project's ``.pre-commit-config.yaml`` file:
+
+.. code-block:: yaml
+
+    repos:
+    - repo: https://github.com/Cielquan/commit-msg-jira-hook
+      rev: 0.7.0 # Use the ref you want to point at
+      hooks:
+      - id: jira_prepare_commit_msg
+        args: ["--jira-tag=<TAG>"]
+
+Exchange the placeholders with your actual config.
+``--jira-tag`` is mandatory.
+``--auto`` can be omitted or changed to ``--always`` to always prepend JIRA tag to
+commit msg even when its already there.
+``--deactivate-with`` takes a string which, when present at the start of the commit msg,
+deactivates adding the JIRA tag to commit msg and removes the string from the commit msg.
+``--no-error`` silences the error which occurs when the current branch has no JIRA tag.
+
+
+Lastly install the hook:
+
+.. code-block:: console
+
+    $ pre-commit install -t prepare-commit-msg
 
 Disclaimer
 ==========
