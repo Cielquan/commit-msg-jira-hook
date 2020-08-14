@@ -2,12 +2,33 @@ minimum_pre_commit_version: "1.15"
 default_stages: [commit, push]
 
 repos:
+#: -----------------------------------------------------------------------------
+#: Meta hooks
+#: -----------------------------------------------------------------------------
+  #: Meta hooks provided by pre-commit
+  - repo: meta
+    hooks:
+      - id: identity
+        stages: [manual]
+      - id: check-hooks-apply
+        stages: [manual]
+      - id: check-useless-excludes
+        stages: [manual]
+
+
+#: -----------------------------------------------------------------------------
+#: Commit hooks
+#: -----------------------------------------------------------------------------
   #: code unspecific out-of-the-box hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.1.0
+    rev: e1668fe86af3810fbca72b8653fe478e66a0afdc  # frozen: v3.2.0
     hooks:
       - id: no-commit-to-branch
-        args: [--branch, staging, --branch, master, --pattern, release/.*]
+        args: [
+          --branch, staging,
+#          --branch, master,
+          --pattern, release/.*,
+        ]
       - id: check-case-conflict
       - id: name-tests-test
         args: ["--django"]
@@ -24,76 +45,60 @@ repos:
 
   #: several python code regex hooks
   - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.5.1
+    rev: 20b9ac745c5adaab12b845b3564c773dcc051d0e  # frozen: v1.5.2
     hooks:
       - id: python-no-log-warn
       - id: python-no-eval
 
   #: pyupgrade - upgrade old python syntax to new
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.4.3
+    rev: f766c29ec4bb6cf2674b81959871e59d5400380a  # frozen: v2.7.2
     hooks:
       - id: pyupgrade
         args: [--py36-plus]
 
-  #: seed-isort-config - fill isort's known_third_party config
-  - repo: https://github.com/asottile/seed-isort-config
-    rev: v2.1.1
-    hooks:
-      - id: seed-isort-config
-        args: [--application-directories, "src:."]
-
   #: isort - sort imports
+  #: Inline skip: `# isort: skip`
   - repo: https://github.com/timothycrosley/isort
-    rev: 4.3.21
+    rev: 9ae09866e278fbc6ec0383ccb16b5c84e78e6e4d  # frozen: 5.3.2
     hooks:
       - id: isort
-        args: [--apply, --recursive]
-        additional_dependencies: [toml>=0.10.1]
 
   #: blacken-docs - black for python code in docs
   - repo: https://github.com/asottile/blacken-docs
-    rev: v1.7.0
+    rev: 7636ee99ad98b63b282cb0ae9d42cf2ef6f17001  # frozen: v1.7.0
     hooks:
       - id: blacken-docs
         additional_dependencies: [black==19.10b0]
 
   #: black - python formatter
+  #: Inline skip: mark block with `# fmt: off` and `# fmt: on` (same indent)
   - repo: https://github.com/psf/black
-    rev: 19.10b0
+    rev: 6bedb5c58a7d8c25aa9509f8217bc24e9797e90d  # frozen: 19.10b0
     hooks:
       - id: black
         args: [--safe]
 
-# TODO: 16.04.2020: Currently bandit is unusable with pre-commit .. wait for fix .. remove in tox then
-#  #: bandit - python code security analyzer
-#  - repo: https://github.com/PyCQA/bandit
-#    rev: 1.6.2
-#    hooks:
-#      - id: bandit
-#        args: ["--exclude ./.tox/*,./venv/*,./.eggs/*,./tests/*"]
+  #: bandit - python code security analyzer
+  #: Inline skip: `# nosec`
+  - repo: https://github.com/PyCQA/bandit
+    rev: d25f3fc5f0f2bd8a251f252e9d81118c4947ae0e  # frozen: 1.6.2
+    hooks:
+      - id: bandit
+        require_serial: true
+        exclude: tests/.*$
 
   #: flake8 - python linter
+  #: File skip: `# flake8: noqa`
+  #: Inline skip: `# noqa` or `# noqa: CODE,...`
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.1
+    rev: 05f6544aef321e2fee03a1277ce2eef8880fb927  # frozen: 3.8.3
     hooks:
       - id: flake8
-        args: [
-          --count,
-          --statistics,
-          "--extend-exclude=*venv*/,*.egg,build/",
-          --extend-ignore=E203,
-          --max-line-length=88,
-          --max-complexity=20,
-          --pytest-fixture-no-parentheses,
-          "--format=${cyan}%(path)s${reset}:${yellow_bold}%(row)d${reset}:${green_bold}%(col)d${reset}: ${red_bold}%(code)s${reset} %(text)s",
-        ]
+        args: [--min-python-version=3.6.1]
         additional_dependencies:
           #: Colored output - needs custom format
           - "flake8-colors"
-          #: Check for python builtins being used as variables or parameters.
-          #: A001-A002
-          - "flake8-builtins==1.5.2"
           #: Finding likely bugs and design problems
           #: B001-B014 | B301-B306 | B901-B903,B950
           - "flake8-bugbear==20.1.4"
@@ -102,8 +107,8 @@ repos:
           - "flake8-comprehensions==3.2.2"
           #: Check docstrings with PEP257
           #: D100-D107 | D200-D215 | D300-D302 | D400-D417
-# TODO: 16.04.2020: Wait for https://github.com/PyCQA/pydocstyle/pull/446 to fix problem with noqa before module docstrings
-          # - "flake8-docstrings==1.5.0"
+          - "flake8-docstrings==1.5.0"
+          - "pydocstyle==5.0.2"
           #: Find dead/out-commented code
           #: E800
           - "flake8-eradicate==0.3.0"
@@ -135,31 +140,37 @@ repos:
           #: YTT101-YTT103 | YTT201-YTT204 | YTT301-YTT303
           - "flake8-2020==1.6.0"
 
+# TODO: 06.06.2020: Fix PR merge https://github.com/python-poetry/poetry/issues/2457
+  #: poetry - dependency and packaging management
+  - repo: https://github.com/Cielquan/poetry
+    rev: 901008fd458066b613b42baf617cfa28ef602cbc
+    hooks:
+      #: Check config file
+      - id: poetry-check
+      #: Update lock file
+      - id: poetry-lock
+
 
   #: Hooks managed via tox `pre-commit` venv
   - repo: local
     hooks:
       #: pylint - python linter
+      #: File skip: `# pylint: skip-file`
+      #: Inline change: `# pylint: disable|enable=CODE|NAME`
       - id: pylint
         name: pylint
-        entry: ./.pre_commit_tool_runner pylint pre-commit,dev
+        description: run pylint over the installed version if available
+        entry: python .tox_env_exe_runner.py pylint pre-commit,dev
         language: system
         types: [python]
       #: mypy - python type checker
+      #: Skip file: `# type: ignore` at top
+      #: Inline skip: `# type: ignore` or `# type: ignore[CODE, ...]`
       - id: mypy
-        args: ["--warn-unused-ignores"] # , --scripts-are-modules, --ignore-missing-imports]
+        args: ["--config-file=tox.ini"]
         name: mypy
-        entry: ./.pre_commit_tool_runner mypy pre-commit,dev
+        description: run mypy over the installed version if available
+        entry: python .tox_env_exe_runner.py mypy pre-commit,dev
         language: system
         types: [python]
-
-
-  #: Meta hooks
-  - repo: meta
-    hooks:
-      - id: identity
-        stages: [manual]
-      - id: check-hooks-apply
-        stages: [manual]
-      - id: check-useless-excludes
-        stages: [manual]
+        require_serial: true
