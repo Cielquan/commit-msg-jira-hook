@@ -1,8 +1,11 @@
 """Script to call executables in `tox` envs.
+
 The script takes two mandatory arguments:
 1. the executable to call like e.g. `pylint`
 2. a string with comma separated `tox` envs to check for the executable
+
 All other arguments after are passed to the tool on call.
+
 The script considers OS and calls the tool accordingly.
 """
 import subprocess  # nosec
