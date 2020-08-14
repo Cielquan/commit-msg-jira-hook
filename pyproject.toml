@@ -22,31 +22,50 @@
         { include = "commit_msg_jira_hook", from = "src" },
     ]
 
-[tool.poetry.dependencies]
-    python = "^3.6.1"
-    importlib-metadata = {version = "^1.6", python = "<3.8"}
-    jira = "^2.0.0"
-    click = "^7.1.2"
-    pytest = {version = "^5.4.2", optional = true}
-    pytest-cov = {version = "^2.8.1", optional = true}
-    toml = {version = "^0.10.1", optional = true}
-    pre-commit = {version = "^2.4", optional = true}
-    mypy = {version = "0.770", optional = true}
-    pylint = {version = "^2.4", optional = true}
+    [tool.poetry.dependencies]
+        python = "^3.6.1"
+        importlib-metadata = {version = "^1.6", python = "<3.8"}
+        jira = "^2.0.0"
+        click = "^7.1.2"
+        gitpython = "^3.1.7"
+        #: Testing
+        pytest = {version = "^6", optional = true}
+        pytest-cov = {version = "^2.10", optional = true}
+        coverage = {extras = ["toml"], version = "^5.2.1", optional = true}
+        pytest-sugar = {version = "^0.9.4", optional = true}
+        pytest-randomly = {version = "^3.4", optional = true}
+        pytest-mock = {version = "^3.2.0", optional = true}
+        mock = {version = "^4.0.2", optional = true}
+        #: Code check
+        pre-commit = {version = "^2.4", optional = true}
+        mypy = {version = "0.782", optional = true}
+        pylint = {version = "^2.5.3", optional = true}
 
-    [tool.poetry.dev-dependencies]
-        devtools = {version = "^0.5", extras = ["pygments"]}
-        towncrier = {version = "19.9.0rc1"}
+        [tool.poetry.dev-dependencies]
+            devtools = {version = "^0.6", extras = ["pygments"]}
+            towncrier = {version = "19.9.0rc1"}
+            ipython = "^7.15.0"
 
-    [tool.poetry.extras]
-        testing = ["pytest", "pytest-cov", "toml"]
-        pre-commit = ["pre-commit", "mypy", "pylint"]
+        [tool.poetry.extras]
+            testing = [
+                "pytest",
+                "pytest-cov", "coverage",
+                "pytest-sugar",
+                "pytest-randomly",
+                "pytest-mock", "mock",
+            ]
+            pre-commit = ["pre-commit", "mypy", "pylint"]
+            linter = [
+                "mypy", "pylint", "flake8", "bandit",
+                "pydocstyle", "rstcheck"
+                ]  #: for VSCode
 
-    [tool.poetry.scripts]
-        jira_commit_msg = "commit_msg_jira_hook.check_jira_tag:main"
+        [tool.poetry.scripts]
+            jira_commit_msg = "commit_msg_jira_hook.check_jira_tag:main"
+            jira_prepare_commit_msg = "commit_msg_jira_hook.add_jira_tag:main"
 
 
-# -- TOWNCRIER CONFIG ----------------------------------------------------------------------
+# -- TOWNCRIER CONFIG ------------------------------------------------------------------
 [tool.towncrier]
     package = "commit_msg_jira_hook"
     package_dir = "src"
@@ -90,61 +109,79 @@
         showcontent = true
 
 
-# -- BLACK CONFIG ----------------------------------------------------------------------
+#: -- BLACK CONFIG ---------------------------------------------------------------------
 [tool.black]
     line-length = 88
     exclude = "venv/"
+    include = '\.pyi?$'
 
 
-# -- ISORT CONFIG ----------------------------------------------------------------------
+#: -- ISORT CONFIG ---------------------------------------------------------------------
 [tool.isort]
-    multi_line_output = 3
-    include_trailing_comma = true
+    profile = "black"
     lines_after_imports = 2
     lines_between_types = 1
-    skip = ["venv"]
-known_first_party = ["commit_msg_jira_hook", "tests"]
-known_third_party = ["click", "jira", "pytest"]
+    skip_gitignore = true
 
 
+#: -- PYLINT CONFIG --------------------------------------------------------------------
+[tool.pylint.master]
+    additional-builtins = "tags"
 
-# -- COVERAGE CONFIG -------------------------------------------------------------------
-[tool.coverage.run]
-    branch = true
-    parallel = true
-    source = ["src/"]
-[tool.coverage.report]
-    fail_under = 100
-    skip_covered = false
-    show_missing = true
-    exclude_lines = [
-        "pragma: no cover",
-        "def __str__",
-        "def __repr__",
-        "if self.debug:",
-        "if settings.DEBUG",
-        "raise AssertionError",
-        "raise NotImplementedError",
-        "if 0:",
-        "if __name__ == .__main__.:",
-    ]
-    omit = [
-        "venv/*",
-        "tests/*",
-        "setup.py",
-        "*/__main__.py",
-    ]
-[tool.coverage.paths]
-    source = [
-        "src/commit_msg_jira_hook",
-         "*/.tox/*/lib/python*/site-packages/commit_msg_jira_hook",
-         "*/.tox/pypy*/site-packages/commit_msg_jira_hook",
-         "*/.tox\\*\\Lib\\site-packages\\commit_msg_jira_hook",
-         "*/src/commit_msg_jira_hook",
-         "*\\src\\commit_msg_jira_hook",
-    ]
+[tool.pylint.messages_control]
+    disable = "C0330, C0326"  #: deactivated for black
+
+[tool.pylint.format]
+    max-line-length = "88"
 
 
-# -- PYLINT CONFIG ---------------------------------------------------------------------
-[tool.pylint."MESSAGES CONTROL"]
-    disable = "C0330" # Indentation | deactivated for black
+#: -- COVERAGE CONFIG ------------------------------------------------------------------
+[tool.coverage]
+    [tool.coverage.run]
+        branch = true
+        parallel = true
+        context = "static-context"
+        omit = [
+            "tests/*",
+            "docs/*",
+        ]
+    [tool.coverage.report]
+        fail_under = 100
+        skip_covered = false
+        show_missing = true
+        exclude_lines = [
+            "# pragma: no cover",
+            "if __name__ == ['\"]__main__['\"]:",
+            "def __str__",
+            "def __repr__",
+            "if self.debug:",
+            "if settings.DEBUG",
+            "if 0:",
+            "if False:",
+            "if TYPE_CHECKING:",
+            "if MYPY:",
+        ]
+        omit = [
+            "venv/*",
+            "tests/*",
+            "setup.py",
+            "*/__main__.py",
+        ]
+    [tool.coverage.paths]
+        source = [
+            "src/commit_msg_jira_hook",
+             "*/.tox/*/lib/python*/site-packages/commit_msg_jira_hook",
+             "*/.tox/pypy*/site-packages/commit_msg_jira_hook",
+             "*/.tox\\*\\Lib\\site-packages\\commit_msg_jira_hook",
+             "*/src/commit_msg_jira_hook",
+             "*\\src\\commit_msg_jira_hook",
+        ]
+    [tool.coverage.html]
+        show_contexts = true
+
+
+#: -- PYTEST CONFIG --------------------------------------------------------------------
+[tool.pytest.ini_options]
+    addopts = "-ra --showlocals"
+    mock_use_standalone_module = true
+    junit_family = "xunit2"
