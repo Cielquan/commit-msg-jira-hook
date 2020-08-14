@@ -160,7 +160,7 @@ repos:
       - id: pylint
         name: pylint
         description: run pylint over the installed version if available
-        entry: python .tox_env_exe_runner.py pylint pre-commit,dev
+        entry: python3 .tox_env_exe_runner.py pylint pre-commit,dev
         language: system
         types: [python]
       #: mypy - python type checker
@@ -170,7 +170,7 @@ repos:
         args: ["--config-file=tox.ini"]
         name: mypy
         description: run mypy over the installed version if available
-        entry: python .tox_env_exe_runner.py mypy pre-commit,dev
+        entry: python3 .tox_env_exe_runner.py mypy pre-commit,dev
         language: system
         types: [python]
         require_serial: true
