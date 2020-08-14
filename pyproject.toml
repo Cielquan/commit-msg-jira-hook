@@ -6,7 +6,7 @@
 # -- POETRY CONFIG ---------------------------------------------------------------------
 [tool.poetry]
     name = "commit-msg-jira-hook"
-    version = "0.6.1"
+    version = "0.7.0"
     description = "commit-msg hook for jira issue verification with pre-commit."
     authors = ["Cielquan <cielquan@protonmail.com>"]
     license = "GPL-3.0-or-later"
@@ -97,7 +97,7 @@
         showcontent = true
 
     [[tool.towncrier.type]]
-        directory = "doc"
+        directory = "docs"
         name = "Documentation"
         showcontent = true
 
