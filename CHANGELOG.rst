@@ -7,6 +7,35 @@ commit-msg-jira-hook Change Log
 
 .. towncrier release notes start
 
+v0.7.0 (2020-08-14)
+-------------------
+
+New Features
+~~~~~~~~~~~~
+
+- Added `prepare-commit-msg` hook to add JIRA tag from branch name.
+  `#9 <https://github.com/cielquan/commit-msg-jira-hook/issues/9>`_
+- Added default stages for both hooks.
+  `#11 <https://github.com/cielquan/commit-msg-jira-hook/issues/11>`_
+
+
+Documentation
+~~~~~~~~~~~~~
+
+- Update README with new hook and default stages.
+  `#12 <https://github.com/cielquan/commit-msg-jira-hook/issues/12>`_
+
+
+Miscellaneous
+~~~~~~~~~~~~~
+
+- Updated tools used for development.
+  `#10 <https://github.com/cielquan/commit-msg-jira-hook/issues/10>`_
+
+
+----
+
+
 v0.6.1 (2020-05-22)
 -------------------
 
