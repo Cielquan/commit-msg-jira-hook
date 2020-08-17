@@ -59,7 +59,9 @@ def test_missing_jira_url(cli_runner):
 
 def test_missing_ini_file(mock_home, cli_runner):
     """Assert error on missing '~/.jira.ini' file when `--verify`."""
-    result = cli_runner.invoke(main, ["--jira-tag=TAG", "--verify", "--jira-url=URL", "NO_FILE"])
+    result = cli_runner.invoke(
+        main, ["--jira-tag=TAG", "--verify", "--jira-url=URL", "NO_FILE"]
+    )
     assert result.exit_code == 1
     assert "No '~/.jira.ini' file found." in result.output
 
