@@ -17,9 +17,10 @@ commit-msg-jira-hook
 +---------------+----------------------------------------------------------------------+
 
 
-commit-msg hook for pre-commit to verify jira issues in commit messages.
+Git hooks used with pre-commit to ensure proper jira issue linking in your commit messages.
 
 See also: https://github.com/pre-commit/pre-commit
+
 
 Prerequisites
 =============
@@ -33,8 +34,12 @@ When the setup fails try updating ``pip``.
 Usage
 =====
 
+
 jira_commit_msg hook
 --------------------
+
+This hook checks if the specified JIRA tag with issue number is present
+in the commit messages and can verify via the JRIA API if the issue number is valid.
 
 Add this to your project's ``.pre-commit-config.yaml`` file:
 
@@ -48,18 +53,21 @@ Add this to your project's ``.pre-commit-config.yaml`` file:
         args: ["--jira-tag=<TAG>", "--verify", "--jira-url=<URL>"]
 
 Exchange the placeholders with your actual config. <URL> may be ``https://jira.atlassian.com``.
-``--jira-tag`` is mandatory.
-``--verify`` can be omitted or changed to ``--no-verify`` to disable online verification.
-``--jira-url`` is mandatory if online verification is enabled or can be omitted otherwise.
+
+Args to specify hook behavior:
+    - ``--jira-tag`` is mandatory.
+    - ``--verify`` can be omitted or changed to ``--no-verify`` to disable online verification.
+    - ``--jira-url`` is mandatory if online verification is enabled or can be omitted otherwise.
 
 
-Then add a ``.jira.ini`` file to your home directory with the following config:
+Then add a ``.jira.ini`` file to your home directory, if you want to use online verification
+for the issue numbers, with the following config:
 
 .. code-block:: ini
 
     [jira]
-    JIRA_USERNAME = email
-    JIRA_TOKEN = api-token
+    JIRA_USERNAME = <YOUR EMAIL>
+    JIRA_TOKEN = <API TOKEN>
 
 Get api token from here: https://id.atlassian.com/manage/api-tokens
 
@@ -70,8 +78,12 @@ Lastly install the hook:
 
     $ pre-commit install -t commit-msg
 
+
 jira_prepare_commit_msg hook
 ----------------------------
+
+This hook extracts this specified JIRA tag and the issue number from your
+current git branch and add them to the beginning of your commit message.
 
 Add this to your project's ``.pre-commit-config.yaml`` file:
 
@@ -85,12 +97,14 @@ Add this to your project's ``.pre-commit-config.yaml`` file:
         args: ["--jira-tag=<TAG>"]
 
 Exchange the placeholders with your actual config.
-``--jira-tag`` is mandatory.
-``--auto`` can be omitted or changed to ``--always`` to always prepend JIRA tag to
-commit msg even when its already there.
-``--deactivate-with`` takes a string which, when present at the start of the commit msg,
-deactivates adding the JIRA tag to commit msg and removes the string from the commit msg.
-``--no-error`` silences the error which occurs when the current branch has no JIRA tag.
+
+Args to specify hook behavior:
+    - ``--jira-tag`` is mandatory.
+    - ``--auto`` can be omitted or changed to ``--always`` to always prepend JIRA tag to
+      commit msg even when its already there.
+    - ``--deactivate-with`` takes a string which, when present at the start of the commit msg,
+      deactivates adding the JIRA tag to commit msg and removes the string from the commit msg.
+    - ``--no-error`` silences the error which occurs when the current branch has no JIRA tag.
 
 
 Lastly install the hook:
@@ -98,6 +112,7 @@ Lastly install the hook:
 .. code-block:: console
 
     $ pre-commit install -t prepare-commit-msg
+
 
 Disclaimer
 ==========
