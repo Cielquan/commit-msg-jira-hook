@@ -7,6 +7,26 @@ commit-msg-jira-hook Change Log
 
 .. towncrier release notes start
 
+v0.7.1 (2020-08-17)
+-------------------
+
+Bugfixes
+~~~~~~~~
+
+- Fixed need for `.jira.ini` file even when `--no-verify` is set.
+  `#13 <https://github.com/cielquan/commit-msg-jira-hook/issues/13>`_
+
+
+Documentation
+~~~~~~~~~~~~~
+
+- Updated README format and content to be better understandable.
+  `#14 <https://github.com/cielquan/commit-msg-jira-hook/issues/14>`_
+
+
+----
+
+
 v0.7.0 (2020-08-14)
 -------------------
 
