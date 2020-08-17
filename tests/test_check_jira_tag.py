@@ -71,7 +71,9 @@ def test_missing_jira_section(mock_home, cli_runner):
     mock_ini = mock_home / ".jira.ini"
     mock_ini.write_text("")
 
-    result = cli_runner.invoke(main, ["--jira-tag=TAG", "--verify", "--jira-url=URL", "NO_FILE"])
+    result = cli_runner.invoke(
+        main, ["--jira-tag=TAG", "--verify", "--jira-url=URL", "NO_FILE"]
+    )
     assert result.exit_code == 1
     assert "No 'jira' section" in result.output
 
@@ -81,7 +83,9 @@ def test_missing_conf_key(mock_home, cli_runner):
     mock_ini = mock_home / ".jira.ini"
     mock_ini.write_text("[jira]\nJIRA_USERNAME=USERNAME\n")
 
-    result = cli_runner.invoke(main, ["--jira-tag=TAG", "--verify", "--jira-url=URL", "NO_FILE"])
+    result = cli_runner.invoke(
+        main, ["--jira-tag=TAG", "--verify", "--jira-url=URL", "NO_FILE"]
+    )
 
     assert result.exit_code == 1
     assert "Missing 'JIRA_TOKEN'" in result.output
