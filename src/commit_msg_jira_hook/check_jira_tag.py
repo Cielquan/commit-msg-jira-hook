@@ -42,35 +42,37 @@ def main(ctx, jira_tag: str, jira_url: str, verify: bool, commit_msg_file: str) 
 
     COMMIT_MSG_FILE: Path to file with commit-msg. Passed by pre-commit."
     """
-    #: Abort if jira-url is missing
-    if verify and not jira_url:
-        click.echo(
-            "Online verification active. Please provide '--jira-url' or "
-            "deactivate online verification with '--no-verify'."
-        )
-        ctx.abort()
-
-    #: Check for '~/.jira.ini' file
-    jira_user_conf_file = Path(Path.home(), ".jira.ini")
-    if not jira_user_conf_file.is_file():
-        click.echo("No '~/.jira.ini' file found.")
-        ctx.abort()
-
-    #: Load ini file
-    jira_user_conf = configparser.ConfigParser()
-    jira_user_conf.read(jira_user_conf_file)
-
-    #: Extract configs from ini file
-    jira_user_conf_dict: Dict[str, str] = {}
-    for config_key in ("JIRA_USERNAME", "JIRA_TOKEN"):
-        try:
-            jira_user_conf_dict[config_key] = jira_user_conf.get("jira", config_key)
-        except configparser.NoSectionError:
-            click.echo("No 'jira' section found in '~/.jira.ini' file.")
+    #: Check needed config for online verification
+    if verify:
+        #: Abort if jira-url is missing
+        if not jira_url:
+            click.echo(
+                "Online verification active. Please provide '--jira-url' or "
+                "deactivate online verification with '--no-verify'."
+            )
             ctx.abort()
-        except configparser.NoOptionError:
-            click.echo(f"Missing '{config_key}' in '~/.jira.ini' file.")
+
+        #: Check for '~/.jira.ini' file
+        jira_user_conf_file = Path(Path.home(), ".jira.ini")
+        if not jira_user_conf_file.is_file():
+            click.echo("No '~/.jira.ini' file found.")
             ctx.abort()
+
+        #: Load ini file
+        jira_user_conf = configparser.ConfigParser()
+        jira_user_conf.read(jira_user_conf_file)
+
+        #: Extract configs from ini file
+        jira_user_conf_dict: Dict[str, str] = {}
+        for config_key in ("JIRA_USERNAME", "JIRA_TOKEN"):
+            try:
+                jira_user_conf_dict[config_key] = jira_user_conf.get("jira", config_key)
+            except configparser.NoSectionError:
+                click.echo("No 'jira' section found in '~/.jira.ini' file.")
+                ctx.abort()
+            except configparser.NoOptionError:
+                click.echo(f"Missing '{config_key}' in '~/.jira.ini' file.")
+                ctx.abort()
 
     #: Get commit msg
     with open(commit_msg_file) as cm_file:
