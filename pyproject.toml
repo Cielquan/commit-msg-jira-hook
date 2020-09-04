@@ -30,6 +30,7 @@
         gitpython = "^3.1.7"
         #: Testing
         pytest = {version = "^6", optional = true}
+        pytest-xdist = {version = "^1.34", optional = true}
         pytest-cov = {version = "^2.10", optional = true}
         coverage = {extras = ["toml"], version = "^5.2.1", optional = true}
         pytest-sugar = {version = "^0.9.4", optional = true}
@@ -46,7 +47,7 @@
 
         [tool.poetry.extras]
             testing = [
-                "pytest",
+                "pytest", "pytest-xdist",
                 "pytest-cov", "coverage",
                 "pytest-sugar",
                 "pytest-randomly",
