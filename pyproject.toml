@@ -144,9 +144,19 @@
             "tests/*",
             "docs/*",
         ]
+
+    [tool.coverage.paths]
+        combine = [
+            "src/commit_msg_jira_hook",
+            "*/.tox/*/lib/python*/site-packages/commit_msg_jira_hook",
+            "*/.tox/pypy*/site-packages/commit_msg_jira_hook",
+            "*/.tox\\*\\Lib\\site-packages\\commit_msg_jira_hook",
+            "*/src/commit_msg_jira_hook",
+            "*\\src\\commit_msg_jira_hook",
+        ]
+
     [tool.coverage.report]
-        fail_under = 100
-        skip_covered = false
+        #fail_under = 100
         show_missing = true
         exclude_lines = [
             "# pragma: no cover",
@@ -160,21 +170,7 @@
             "if TYPE_CHECKING:",
             "if MYPY:",
         ]
-        omit = [
-            "venv/*",
-            "tests/*",
-            "setup.py",
-            "*/__main__.py",
-        ]
-    [tool.coverage.paths]
-        source = [
-            "src/commit_msg_jira_hook",
-             "*/.tox/*/lib/python*/site-packages/commit_msg_jira_hook",
-             "*/.tox/pypy*/site-packages/commit_msg_jira_hook",
-             "*/.tox\\*\\Lib\\site-packages\\commit_msg_jira_hook",
-             "*/src/commit_msg_jira_hook",
-             "*\\src\\commit_msg_jira_hook",
-        ]
+
     [tool.coverage.html]
         show_contexts = true
 
