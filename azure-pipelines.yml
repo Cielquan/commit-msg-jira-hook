@@ -37,8 +37,7 @@ jobs:
         py38:
           os: [linux, windows, macOs]
         py39: null
-        pypy3:
-          os: [linux, macOs]
+        pypy3: null
         package:
           os: [linux, windows, macOs]
       coverage:
