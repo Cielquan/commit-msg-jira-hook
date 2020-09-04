@@ -5,7 +5,7 @@ commit-msg-jira-hook
 +---------------+----------------------------------------------------------------------+
 | **General**   | |maintenance| |license| |black|                                      |
 +---------------+----------------------------------------------------------------------+
-| **Pipeline**  | |travis| |codecov|                                                   |
+| **Pipeline**  | |azure_pipeline| |azure_coverage|                                    |
 +---------------+----------------------------------------------------------------------+
 | **Tools**     | |poetry| |tox| |pytest|                                              |
 +---------------+----------------------------------------------------------------------+
@@ -140,13 +140,13 @@ but I cannot promise a quick response time.
 
 
 .. Pipeline
-.. |travis| image:: https://img.shields.io/travis/com/Cielquan/commit-msg-jira-hook/master.svg?style=flat-square&logo=travis-ci&logoColor=FBE072
-    :alt: Travis - Build Status
-    :target: https://travis-ci.com/Cielquan/commit-msg-jira-hook
+.. |azure_pipeline| image:: https://img.shields.io/azure-devops/build/cielquan/7c9eeb3a-e648-46c5-a423-596beea9d8e1/5?style=flat-square&logo=azure-pipelines&label=Azure%20Pipelines
+    :target: https://dev.azure.com/cielquan/commit-msg-jira-hook/_build/latest?definitionId=5&branchName=master
+    :alt: Azure DevOps builds
 
-.. |codecov| image:: https://img.shields.io/codecov/c/github/Cielquan/commit-msg-jira-hook/master.svg?style=flat-square&logo=codecov
-    :alt: Codecov - Test Coverage
-    :target: https://codecov.io/gh/Cielquan/commit-msg-jira-hook
+.. |azure_coverage| image:: https://img.shields.io/azure-devops/coverage/cielquan/commit-msg-jira-hook/5?style=flat-square&logo=azure-pipelines&label=Coverage
+    :target: https://dev.azure.com/cielquan/commit-msg-jira-hook/_build/latest?definitionId=5&branchName=master
+    :alt: Azure DevOps Coverage
 
 
 .. Tools
