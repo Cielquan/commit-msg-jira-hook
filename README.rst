@@ -140,12 +140,12 @@ but I cannot promise a quick response time.
 
 
 .. Pipeline
-.. |azure_pipeline| image:: https://img.shields.io/azure-devops/build/cielquan/7c9eeb3a-e648-46c5-a423-596beea9d8e1/5?style=flat-square&logo=azure-pipelines&label=Azure%20Pipelines
-    :target: https://dev.azure.com/cielquan/commit-msg-jira-hook/_build/latest?definitionId=5&branchName=master
+.. |azure_pipeline| image:: https://img.shields.io/azure-devops/build/cielquan/7c9eeb3a-e648-46c5-a423-596beea9d8e1/6?style=flat-square&logo=azure-pipelines&label=Azure%20Pipelines
+    :target: https://dev.azure.com/cielquan/commit-msg-jira-hook/_build/latest?definitionId=6&branchName=master
     :alt: Azure DevOps builds
 
-.. |azure_coverage| image:: https://img.shields.io/azure-devops/coverage/cielquan/commit-msg-jira-hook/5?style=flat-square&logo=azure-pipelines&label=Coverage
-    :target: https://dev.azure.com/cielquan/commit-msg-jira-hook/_build/latest?definitionId=5&branchName=master
+.. |azure_coverage| image:: https://img.shields.io/azure-devops/coverage/cielquan/commit-msg-jira-hook/6?style=flat-square&logo=azure-pipelines&label=Coverage
+    :target: https://dev.azure.com/cielquan/commit-msg-jira-hook/_build/latest?definitionId=6&branchName=master
     :alt: Azure DevOps Coverage
 
 
