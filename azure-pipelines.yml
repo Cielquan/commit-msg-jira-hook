@@ -21,7 +21,7 @@ resources:
 
 variables:
   PYTEST_ADDOPTS: "-v -v -ra --showlocals"
-  PYTEST_XDIST_PROC_NR: '0'
+  PYTEST_XDIST_N: '0'
 
 jobs:
   - template: jobs/run-tox.yml@cielquan
