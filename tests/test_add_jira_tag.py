@@ -125,7 +125,9 @@ def test_tag_added(cli_runner, mock_commit_msg_file, monkeypatch):
     assert mock_commit_msg_file.read_text() == "TEST-123: commit message 0815"
 
 
-def test_tag_added_even_when_tag_as_comment(cli_runner, mock_commit_msg_file, monkeypatch):
+def test_tag_added_even_when_tag_as_comment(
+    cli_runner, mock_commit_msg_file, monkeypatch
+):
     """Assert normal use works even when tag is already in message but as comment."""
 
     class MockBranch:  # pylint: disable=too-few-public-methods, missing-class-docstring
