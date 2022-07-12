@@ -7,6 +7,21 @@ commit-msg-jira-hook Change Log
 
 .. towncrier release notes start
 
+v1.0.0 (2022-07-12)
+-------------------
+
+Bugfixes
+~~~~~~~~
+
+- Fixed bug where no jira tag was added when commiting without `-m`.
+  `#17 <https://github.com/cielquan/commit-msg-jira-hook/issues/17>`_
+
+- Fixed bug where commit message with only comments was not counted as empty.
+
+
+----
+
+
 v0.7.1 (2020-08-17)
 -------------------
 
