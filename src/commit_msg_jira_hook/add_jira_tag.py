@@ -91,8 +91,12 @@ def main(  # pylint: disable=too-many-arguments
 
     branch_jira_issue = extract.group(0)  # type: ignore[union-attr]
 
+    #: Cleanse commit msg from comments
+    c_msg_lines = [l for l in c_msg.split("\n") if not l.startswith("#") and l != ""]
+    c_msg_cleaned = "\n".join(c_msg_lines)
+
     #: Exit if issue already in commit msg
-    if jira_issue_re.search(c_msg) and not always:
+    if jira_issue_re.search(c_msg_cleaned) and not always:
         ctx.exit()
 
     #: Update commit msg
