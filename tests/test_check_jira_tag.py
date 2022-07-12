@@ -103,6 +103,18 @@ def test_empty_commit_msg(mock_ini, mock_commit_msg_file, cli_runner):
     assert "Commit message is empty." in result.output
 
 
+def test_empty_commit_msg_but_comments(mock_ini, mock_commit_msg_file, cli_runner):
+    """Assert error on empty commit msg."""
+    mock_commit_msg_file.write_text("\n#Foobar")
+
+    result = cli_runner.invoke(
+        main, ["--jira-tag=TAG", "--jira-url=URL", str(mock_commit_msg_file)]
+    )
+
+    assert result.exit_code == 1
+    assert "Commit message is empty." in result.output
+
+
 @pytest.mark.parametrize("commit_msg", ["message", "tag", "tag-", "#tag", "#tag-123"])
 def test_missing_tag(commit_msg, mock_ini, mock_commit_msg_file, cli_runner):
     """Assert error on missing tag."""
