@@ -115,7 +115,18 @@ def test_empty_commit_msg_but_comments(mock_ini, mock_commit_msg_file, cli_runne
     assert "Commit message is empty." in result.output
 
 
-@pytest.mark.parametrize("commit_msg", ["message", "message tag", "message tag-", "message #tag", "message #tag-123", "tag message", "tag- message"])
+@pytest.mark.parametrize(
+    "commit_msg",
+    [
+        "message",
+        "message tag",
+        "message tag-",
+        "message #tag",
+        "message #tag-123",
+        "tag message",
+        "tag- message",
+    ],
+)
 def test_missing_tag(commit_msg, mock_ini, mock_commit_msg_file, cli_runner):
     """Assert error on missing tag."""
     mock_commit_msg_file.write_text(commit_msg)
@@ -128,7 +139,17 @@ def test_missing_tag(commit_msg, mock_ini, mock_commit_msg_file, cli_runner):
     assert "'TAG' tag not found" in result.output
 
 
-@pytest.mark.parametrize("commit_msg", ["message TAG", "message TAG-", "message #TAG", "message #TAG-", "TAG message", "TAG- message"])
+@pytest.mark.parametrize(
+    "commit_msg",
+    [
+        "message TAG",
+        "message TAG-",
+        "message #TAG",
+        "message #TAG-",
+        "TAG message",
+        "TAG- message",
+    ],
+)
 def test_missing_tag_number(commit_msg, mock_ini, mock_commit_msg_file, cli_runner):
     """Assert error on missing tag number."""
     mock_commit_msg_file.write_text(commit_msg)
