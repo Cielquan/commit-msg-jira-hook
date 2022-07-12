@@ -138,4 +138,4 @@ def test_tag_added_even_when_tag_as_comment(
     mock_commit_msg_file.write_text("commit message 0815\n#TEST-123")
     result = cli_runner.invoke(main, ["--jira-tag=TEST", str(mock_commit_msg_file)])
     assert result.exit_code == 0
-    assert mock_commit_msg_file.read_text() == "TEST-123: commit message 0815\nTEST-123"
+    assert mock_commit_msg_file.read_text() == "TEST-123: commit message 0815\n#TEST-123"
