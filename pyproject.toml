@@ -29,21 +29,21 @@
         click = "^7.1.2"
         gitpython = "^3.1.7"
         #: Testing
-        pytest = {version = "^6", optional = true}
-        pytest-xdist = {version = "^1.34", optional = true}
-        pytest-cov = {version = "^2.10", optional = true}
-        coverage = {extras = ["toml"], version = "^5.2.1", optional = true}
-        pytest-sugar = {version = "^0.9.4", optional = true}
-        pytest-randomly = {version = "^3.4", optional = true}
+        pytest = {version = ">=6", optional = true}
+        pytest-xdist = {version = ">=1.34", optional = true}
+        pytest-cov = {version = ">=2.10", optional = true}
+        coverage = {extras = ["toml"], version = ">=5.2.1", optional = true}
+        pytest-sugar = {version = ">=0.9.4", optional = true}
+        pytest-randomly = {version = ">=3.4", optional = true}
         #: Code check
-        pre-commit = {version = "^2.4", optional = true}
-        mypy = {version = "0.782", optional = true}
-        pylint = {version = "^2.5.3", optional = true}
+        pre-commit = {version = ">=2.4", optional = true}
+        mypy = {version = ">=0.782", optional = true}
+        pylint = {version = ">=2.5.3", optional = true}
 
         [tool.poetry.dev-dependencies]
-            devtools = {version = "^0.6", extras = ["pygments"]}
+            devtools = {version = ">=0.6", extras = ["pygments"]}
             towncrier = {version = "19.9.0rc1"}
-            ipython = "^7.15.0"
+            ipython = ">=7.15.0"
 
         [tool.poetry.extras]
             testing = [
