@@ -47,7 +47,7 @@ Add this to your project's ``.pre-commit-config.yaml`` file:
 
     repos:
     - repo: https://github.com/Cielquan/commit-msg-jira-hook
-      rev: 0.7.1 # Use the ref you want to point at
+      rev: '' # Use the ref you want to point at
       hooks:
       - id: jira_commit_msg
         args: ["--jira-tag=<TAG>", "--verify", "--jira-url=<URL>"]
@@ -91,7 +91,7 @@ Add this to your project's ``.pre-commit-config.yaml`` file:
 
     repos:
     - repo: https://github.com/Cielquan/commit-msg-jira-hook
-      rev: 0.7.1 # Use the ref you want to point at
+      rev: '' # Use the ref you want to point at
       hooks:
       - id: jira_prepare_commit_msg
         args: ["--jira-tag=<TAG>"]
