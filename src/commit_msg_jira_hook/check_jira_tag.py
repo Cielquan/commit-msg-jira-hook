@@ -79,12 +79,16 @@ def main(ctx, jira_tag: str, jira_url: str, verify: bool, commit_msg_file: str) 
         c_msg = cm_file.read()
 
     #: Abort with empty commit-msg
-    if c_msg == "":
+    c_msg_lines = [l for l in c_msg.split("\n") if not l.startswith("#") and l != ""]
+
+    if len(c_msg_lines) == 0:
         click.echo("Commit message is empty.")
         ctx.abort()
 
+    c_msg_cleaned = "\n".join(c_msg_lines)
+
     #: Extract tag from commit msg
-    extract = re.search(r"(" + jira_tag.upper() + r")-?([0-9]+)?", c_msg)
+    extract = re.search(r"(" + jira_tag.upper() + r")-?([0-9]+)?", c_msg_cleaned)
 
     #: Check if tag is in commit msg
     if extract is None:
