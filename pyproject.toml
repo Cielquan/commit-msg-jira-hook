@@ -6,7 +6,7 @@
 # -- POETRY CONFIG ---------------------------------------------------------------------
 [tool.poetry]
     name = "commit-msg-jira-hook"
-    version = "1.1.1"
+    version = "1.1.2"
     description = "commit-msg hook for jira issue verification with pre-commit."
     authors = ["Cielquan <cielquan@protonmail.com>"]
     license = "GPL-3.0-or-later"
