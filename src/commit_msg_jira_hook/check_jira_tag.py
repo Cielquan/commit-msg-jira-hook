@@ -97,10 +97,6 @@ def main(ctx, jira_tag: str, jira_url: str, verify: bool, commit_msg_file: str) 
         click.echo(f"'{jira_tag.upper()}' tag not found in commit message.")
         ctx.abort()
 
-    if extract.group(2) is None:  # type: ignore
-        click.echo(f"'{jira_tag.upper()}' tag but no number found in commit message.")
-        ctx.abort()
-
     for match in re.finditer(regex_str, c_msg_cleaned):
         #: Check if tag has a number
         if match.group(2) is None:  # type: ignore
