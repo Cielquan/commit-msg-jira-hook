@@ -1,18 +1,18 @@
 # noqa: D205,D208,D400
 """
-    tests.test_check_jira_tag
-    ~~~~~~~~~~~~~~~~~~~~~~~~~
+tests.test_check_jira_tag
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    test check_jira_tag
+test check_jira_tag
 
-    :copyright: (c) 2020 Christian Riedel
-    :license: GPLv3, see LICENSE for more details
+:copyright: (c) 2020 Christian Riedel
+:license: GPLv3, see LICENSE for more details
 """
+
 # pylint: disable=W0613,W0621
 from pathlib import Path
 
 import pytest
-
 from click.testing import CliRunner
 from jira import JIRA  # type: ignore[import]
 from jira import exceptions as jira_exc
@@ -219,7 +219,7 @@ def test_no_verify(mock_ini, mock_commit_msg_file, cli_runner):
         "message #TAG #TAG-123 #TAG",
     ],
 )
-def test_all_tag_finds_are_search_for_fullmatch(
+def test_all_tag_finds_are_searched_for_fullmatch(
     commit_msg, mock_ini, mock_commit_msg_file, cli_runner
 ):
     """Assert next tag occurance is checked if prior one is missing number."""
