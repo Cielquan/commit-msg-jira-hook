@@ -209,3 +209,24 @@ def test_no_verify(mock_ini, mock_commit_msg_file, cli_runner):
     )
 
     assert result.exit_code == 0
+
+
+@pytest.mark.parametrize(
+    "commit_msg",
+    [
+        "TAG message TAG123",
+        "TAG message TAG-123",
+        "message #TAG #TAG-123 #TAG",
+    ],
+)
+def test_all_tag_finds_are_search_for_fullmatch(
+    commit_msg, mock_ini, mock_commit_msg_file, cli_runner
+):
+    """Assert next tag occurance is checked if prior one is missing number."""
+    mock_commit_msg_file.write_text(commit_msg)
+
+    result = cli_runner.invoke(
+        main, ["--jira-tag=TAG", "--no-verify", str(mock_commit_msg_file)]
+    )
+
+    assert result.exit_code == 0

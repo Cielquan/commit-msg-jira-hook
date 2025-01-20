@@ -87,21 +87,31 @@ def main(ctx, jira_tag: str, jira_url: str, verify: bool, commit_msg_file: str) 
 
     c_msg_cleaned = "\n".join(c_msg_lines)
 
+    regex_str = r"(" + jira_tag.upper() + r")-?([0-9]+)?"
+
     #: Extract tag from commit msg
-    extract = re.search(r"(" + jira_tag.upper() + r")-?([0-9]+)?", c_msg_cleaned)
+    extract = re.search(regex_str, c_msg_cleaned)
 
     #: Check if tag is in commit msg
     if extract is None:
         click.echo(f"'{jira_tag.upper()}' tag not found in commit message.")
         ctx.abort()
 
-    #: Check if tag has a number
     if extract.group(2) is None:  # type: ignore
         click.echo(f"'{jira_tag.upper()}' tag but no number found in commit message.")
         ctx.abort()
 
-    #: Get tag from extract
-    issue = str(extract.group(0))  # type: ignore
+    for match in re.finditer(regex_str, c_msg_cleaned):
+        #: Check if tag has a number
+        if match.group(2) is None:  # type: ignore
+            #: This tag has no number, try next
+            continue
+        #: Get tag from extract
+        issue = str(match.group(0))  # type: ignore
+        break
+    else:
+        click.echo(f"'{jira_tag.upper()}' tag but no number found in commit message.")
+        ctx.abort()
 
     #: Exit with 0 when online check is disabled
     if not verify:
