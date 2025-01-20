@@ -23,8 +23,16 @@ from git import Repo  # type: ignore[import]
     "--always/--auto",
     default=False,
     help=(
-        "Switch between always adding JIRA issue in front or only adding if missing. "
+        "Switch between always adding JIRA issue or only adding if missing. "
         "Default=auto"
+    ),
+)
+@click.option(
+    "--front/--end",
+    default=True,
+    help=(
+        "Switch between always adding JIRA issue or only adding if missing. "
+        "Default=front"
     ),
 )
 @click.option(
@@ -53,6 +61,7 @@ def main(  # pylint: disable=too-many-arguments
     jira_tag: str,
     deactivate_with: str,
     always: bool,
+    front: bool,
     no_error: bool,
     commit_msg_file: str,
 ) -> None:
@@ -101,7 +110,12 @@ def main(  # pylint: disable=too-many-arguments
 
     #: Update commit msg
     with open(commit_msg_file, mode="w") as cm_file:
-        cm_file.write(f"{branch_jira_issue}: {c_msg}")
+        if front:
+            cm_file.write(f"{branch_jira_issue}: {c_msg}")
+        else:
+            cm_file.write(f"{c_msg}\nLinks to: {branch_jira_issue}")
+
+    ctx.exit()
 
 
 if __name__ == "__main__":

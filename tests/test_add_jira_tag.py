@@ -111,7 +111,7 @@ def test_tag_in_msg_not_add_again(cli_runner, mock_commit_msg_file, monkeypatch)
     assert mock_commit_msg_file.read_text() == "TEST-123 commit message 0815"
 
 
-def test_tag_added(cli_runner, mock_commit_msg_file, monkeypatch):
+def test_tag_added_in_front_by_default(cli_runner, mock_commit_msg_file, monkeypatch):
     """Assert normal use works."""
 
     class MockBranch:  # pylint: disable=too-few-public-methods, missing-class-docstring
@@ -140,4 +140,22 @@ def test_tag_added_even_when_tag_as_comment(
     assert result.exit_code == 0
     assert (
         mock_commit_msg_file.read_text() == "TEST-123: commit message 0815\n#TEST-123"
+    )
+
+
+def test_tag_added_at_the_end_when_set(
+    cli_runner, mock_commit_msg_file, monkeypatch
+):
+    """Assert tag is appended with '--end'."""
+
+    class MockBranch:  # pylint: disable=too-few-public-methods, missing-class-docstring
+        name = "feat/TEST-123-branch"
+
+    monkeypatch.setattr(Repo, "active_branch", MockBranch())
+
+    mock_commit_msg_file.write_text("commit message 0815")
+    result = cli_runner.invoke(main, ["--jira-tag=TEST", "--end", str(mock_commit_msg_file)])
+    assert result.exit_code == 0
+    assert (
+        mock_commit_msg_file.read_text() == "commit message 0815\nLinks to: TEST-123"
     )
